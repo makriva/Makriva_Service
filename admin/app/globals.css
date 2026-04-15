@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0A0A0A; color: #fff; font-family: 'Montserrat', sans-serif; }
+
+.input-admin {
+  @apply w-full px-3 py-2 text-sm text-white bg-[#0A0A0A] border border-[#1E1E1E] outline-none transition-colors;
+}
+.input-admin:focus { border-color: #D4AF37; }
+.input-admin::placeholder { color: #555; }
+
+.btn-primary {
+  @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-black transition-all duration-200;
+  background: linear-gradient(135deg, #D4AF37, #F0D060);
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-danger {
+  @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 transition-colors;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-400 border border-[#222] hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors;
+}
+
+.table-row:hover { background: rgba(255,255,255,0.02); }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #222; }
+::-webkit-scrollbar-thumb:hover { background: #D4AF37; }

@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #D4AF37;
+  --gold-light: #F0D060;
+  --pink: #E90064;
+  --dark: #0A0A0A;
+  --dark-card: #111111;
+  --dark-border: #1E1E1E;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Gold text */
+.text-gold { color: var(--gold); }
+.text-gold-gradient {
+  background: linear-gradient(135deg, #D4AF37, #F0D060, #A8860A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gold button */
+.btn-gold {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold tracking-wider uppercase text-sm rounded-none transition-all duration-300;
+  background: linear-gradient(135deg, #D4AF37, #F0D060);
+  color: #000;
+}
+.btn-gold:hover {
+  background: linear-gradient(135deg, #F0D060, #D4AF37);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+}
+
+.btn-outline-gold {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold tracking-wider uppercase text-sm rounded-none transition-all duration-300 border;
+  border-color: var(--gold);
+  color: var(--gold);
+  background: transparent;
+}
+.btn-outline-gold:hover {
+  background: var(--gold);
+  color: #000;
+}
+
+/* Section heading */
+.section-title {
+  @apply text-3xl md:text-4xl font-bold mb-2;
+  font-family: 'Playfair Display', serif;
+}
+.section-subtitle { @apply text-gray-400 text-sm tracking-widest uppercase mb-8; }
+.gold-line {
+  width: 60px; height: 2px;
+  background: linear-gradient(90deg, #D4AF37, #F0D060);
+  margin: 12px auto 32px;
+}
+
+/* Card */
+.product-card-new {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.product-card-new:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(212, 175, 55, 0.15);
+}
+
+/* Input — must be in @layer components so Tailwind utilities (pl-10, etc.) take precedence */
+@layer components {
+  .input-dark {
+    @apply w-full px-4 py-3 text-white border outline-none transition-colors duration-200;
+    background-color: #0D0D0D;
+    border-color: var(--dark-border);
+    border-radius: 0;
+    caret-color: #D4AF37;
+    font-size: 1rem;
+  }
+  .input-dark:focus { 
+    border-color: var(--gold); 
+  }
+  .input-dark::placeholder { 
+    color: #666666;
+    opacity: 1;
+  }
+  .input-dark:focus::placeholder { 
+    color: #888888;
+  }
+  .input-dark::-webkit-input-placeholder { 
+    color: #666666;
+    opacity: 1;
+  }
+  .input-dark:focus::-webkit-input-placeholder { 
+    color: #888888;
+  }
+  .input-dark option { background: #111; color: #fff; }
+  
+  /* Ensure no text overlap with placeholder */
+  .input-dark[value]:not([value=""]) {
+    color: #ffffff;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* Badge */
+.badge-gold {
+  @apply text-xs font-bold px-2 py-0.5 uppercase tracking-wider;
+  background: linear-gradient(135deg, #D4AF37, #F0D060);
+  color: #000;
+}
+
+/* Page transition */
+.page-enter { animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
