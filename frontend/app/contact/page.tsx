@@ -36,9 +36,9 @@ export default function ContactPage() {
               <p className="text-gray-400 leading-relaxed mb-8">Have a question about our products or your order? We'd love to hear from you. Reach out and we'll respond as soon as possible.</p>
               <div className="space-y-6">
                 {[
-                  { icon: FiMail, label: 'Email', value: 'hello@makriva.in', href: 'mailto:hello@makriva.in' },
-                  { icon: FiPhone, label: 'Phone', value: '+91 99999 99999', href: 'tel:+919999999999' },
-                  { icon: FiMapPin, label: 'Location', value: 'India', href: '#' },
+                  { icon: FiMail, label: 'Email', value: 'makrivatraders@gmail.com', href: 'mailto:makrivatraders@gmail.com' },
+                  { icon: FiPhone, label: 'Phone', value: '+91 83980 30577', href: 'tel:+918398030577' },
+                  { icon: FiMapPin, label: 'Location', value: 'Jawahar Nagar, Safidon Road, Near Deep Palace Hotel, Jind, Haryana, 126102', href: 'https://www.google.com/maps/place/MakRiva+Traders/@29.3245682,76.3501392,860m/data=!3m2!1e3!4b1!4m6!3m5!1s0x391205608b63d11b:0xdd30b1c691b84a7a!8m2!3d29.3245635!4d76.3527141!16s%2Fg%2F11mlyj2py2?entry=ttu&g_ep=EgoyMDI2MDQxMi4wIKXMDSoASAFQAw%3D%3D' },
                 ].map(item => (
                   <div key={item.label} className="flex items-center gap-4">
                     <div className="w-12 h-12 flex items-center justify-center border border-[#D4AF37]/30" style={{ background: 'rgba(212,175,55,0.05)' }}>

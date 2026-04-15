@@ -49,15 +49,15 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-sm text-gray-500">
                 <FiMapPin size={15} className="mt-0.5 flex-shrink-0 text-[#D4AF37]" />
-                <span>India</span>
+                <a href="https://www.google.com/maps/place/MakRiva+Traders/@29.3245682,76.3501392,860m/data=!3m2!1e3!4b1!4m6!3m5!1s0x391205608b63d11b:0xdd30b1c691b84a7a!8m2!3d29.3245635!4d76.3527141!16s%2Fg%2F11mlyj2py2?entry=ttu&g_ep=EgoyMDI2MDQxMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition-colors">Jawahar Nagar, Safidon Road, Near Deep Palace Hotel, Jind, Haryana, 126102</a>
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-500">
                 <FiMail size={15} className="flex-shrink-0 text-[#D4AF37]" />
-                <a href="mailto:hello@makriva.in" className="hover:text-[#D4AF37] transition-colors">hello@makriva.in</a>
+                <a href="mailto:makrivatraders@gmail.com" className="hover:text-[#D4AF37] transition-colors">makrivatraders@gmail.com</a>
               </li>
               <li className="flex items-center gap-3 text-sm text-gray-500">
                 <FiPhone size={15} className="flex-shrink-0 text-[#D4AF37]" />
-                <a href="tel:+919999999999" className="hover:text-[#D4AF37] transition-colors">+91 99999 99999</a>
+                <a href="tel:+918398030577" className="hover:text-[#D4AF37] transition-colors">+91 83980 30577</a>
               </li>
             </ul>
           </div>
