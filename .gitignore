@@ -36,5 +36,7 @@ npm-debug.log*
 
 # Docker volumes
 postgres_data/
-./images
-Images
+
+# Local asset folders (not for deployment)
+/images
+/Images
