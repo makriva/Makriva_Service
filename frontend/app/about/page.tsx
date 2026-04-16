@@ -26,7 +26,7 @@ export default function AboutPage() {
               <p className="section-subtitle">Who We Are</p>
               <h2 className="section-title text-left mb-4">Premium Makhana,<br />Pure Origins</h2>
               <div className="gold-line mx-0 mb-6" />
-              <div className="space-y-4 text-gray-400 leading-relaxed">
+              <div className="space-y-4 text-[#686B78] leading-relaxed">
                 <p>MakRiva was born from a simple belief — that healthy snacking should never mean compromising on taste or quality. We source the finest fox nuts (makhana) directly from the fertile wetlands of Bihar and Madhya Pradesh, working hand-in-hand with local farmers.</p>
                 <p>Every batch is carefully graded, cleaned, and processed in our state-of-the-art facility before being slow-roasted or flavoured with natural seasonings. No artificial additives, no preservatives — just pure makhana goodness.</p>
                 <p>From our farm-to-pack promise to our zero-waste packaging initiative, everything we do reflects our commitment to quality, sustainability, and your health.</p>
@@ -48,10 +48,10 @@ export default function AboutPage() {
               { icon: '🤝', title: 'Farmer Partnership', desc: 'We partner directly with Bihar farmers, ensuring fair prices and sustainable harvesting.' },
               { icon: '✨', title: 'Uncompromising Quality', desc: 'Rigorous grading and quality checks at every stage — from farm to your doorstep.' },
             ].map(v => (
-              <div key={v.title} className="bg-[#0D0D0D] border border-[#1E1E1E] p-8 text-center hover:border-[#D4AF37]/30 transition-colors">
+              <div key={v.title} className="bg-white border border-[#F0F0F0] rounded-2xl p-8 text-center hover:border-brand hover:shadow-card-hover transition-all duration-200">
                 <div className="text-4xl mb-4">{v.icon}</div>
-                <h3 className="font-bold text-lg mb-3" style={{ fontFamily: 'Playfair Display, serif' }}>{v.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{v.desc}</p>
+                <h3 className="font-bold text-lg text-[#1C1C1C] mb-3" style={{ fontFamily: 'Playfair Display, serif' }}>{v.title}</h3>
+                <p className="text-[#686B78] text-sm leading-relaxed">{v.desc}</p>
               </div>
             ))}
           </div>

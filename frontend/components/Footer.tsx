@@ -1,73 +1,177 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiInstagram, FiFacebook, FiYoutube, FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
+import { FiInstagram, FiFacebook, FiYoutube, FiMail, FiPhone, FiMapPin, FiArrowRight } from 'react-icons/fi';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#080808] border-t border-[#1E1E1E] mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+    <footer className="bg-white border-t border-[#F0F0F0] mt-16">
+
+      {/* ── CTA band ────────────────────────────────────────── */}
+      <div className="border-b border-[#F0F0F0]" style={{ background: 'linear-gradient(135deg, #FF5200 0%, #FF8C00 100%)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="text-xl font-extrabold text-white mb-1">
+              Craving something crunchy?
+            </h3>
+            <p className="text-white/80 text-sm">
+              Order now and get premium makhana delivered to your door.
+            </p>
+          </div>
+          <Link
+            href="/products"
+            className="flex items-center gap-2 bg-white text-brand font-extrabold px-7 py-3.5 rounded-xl hover:bg-brand-50 transition-colors shrink-0 shadow-lg"
+          >
+            Order Now <FiArrowRight size={16} />
+          </Link>
+        </div>
+      </div>
+
+      {/* ── Main footer grid ─────────────────────────────────── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-5">
-              <Image src="/images/makriva-logo.png" alt="MakRiva" width={40} height={40} className="object-contain" />
-              <span className="font-bold text-xl tracking-widest text-gold-gradient">MAKRIVA</span>
+              <div className="w-10 h-10 rounded-xl overflow-hidden bg-brand-50 flex items-center justify-center">
+                <Image src="/images/makriva-logo.png" alt="MakRiva" width={40} height={40} className="object-contain" />
+              </div>
+              <span className="font-extrabold text-xl text-brand tracking-tight">MakRiva</span>
             </div>
-            <p className="text-gray-500 text-sm leading-relaxed mb-5">
-              Premium quality makhana (fox nuts) sourced directly from the farms of Bihar. Naturally healthy, deliciously flavoured.
+            <p className="text-[#686B78] text-sm leading-relaxed mb-5">
+              Premium makhana (fox nuts) sourced directly from Bihar's farms. Naturally healthy, irresistibly delicious.
             </p>
-            <div className="flex gap-4">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#D4AF37] transition-colors"><FiInstagram size={18} /></a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#D4AF37] transition-colors"><FiFacebook size={18} /></a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#D4AF37] transition-colors"><FiYoutube size={18} /></a>
+
+            {/* Rating badge */}
+            <div className="inline-flex items-center gap-2 bg-brand-50 rounded-xl px-4 py-2 mb-5">
+              <span className="text-[#FFB800] text-base">★★★★★</span>
+              <span className="text-sm font-bold text-[#1C1C1C]">4.8</span>
+              <span className="text-xs text-[#686B78]">· 2,000+ happy customers</span>
+            </div>
+
+            {/* Social icons */}
+            <div className="flex gap-3">
+              {[
+                { href: 'https://instagram.com', icon: <FiInstagram size={17} />, label: 'Instagram' },
+                { href: 'https://facebook.com',  icon: <FiFacebook size={17} />,  label: 'Facebook' },
+                { href: 'https://youtube.com',   icon: <FiYoutube size={17} />,   label: 'YouTube' },
+              ].map(({ href, icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-9 h-9 rounded-xl flex items-center justify-center text-[#686B78] hover:text-brand hover:bg-brand-50 border border-[#E9E9EB] transition-all duration-200"
+                >
+                  {icon}
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-bold text-sm uppercase tracking-widest text-white mb-5">Quick Links</h4>
+            <h4 className="font-extrabold text-sm text-[#1C1C1C] uppercase tracking-widest mb-5">Quick Links</h4>
             <ul className="space-y-3">
-              {[['Shop', '/products'], ['About Us', '/about'], ['Contact', '/contact'], ['Privacy Policy', '/privacy']].map(([label, href]) => (
-                <li key={href}><Link href={href} className="text-gray-500 text-sm hover:text-[#D4AF37] transition-colors">{label}</Link></li>
+              {[
+                ['Home',           '/'],
+                ['Products',       '/products'],
+                ['About Us',       '/about'],
+                ['Contact',        '/contact'],
+                ['Privacy Policy', '/privacy'],
+              ].map(([label, href]) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="flex items-center gap-2 text-[#686B78] text-sm hover:text-brand transition-colors group"
+                  >
+                    <FiArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity text-brand" />
+                    {label}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
 
-          {/* Products */}
+          {/* Popular Products */}
           <div>
-            <h4 className="font-bold text-sm uppercase tracking-widest text-white mb-5">Our Products</h4>
+            <h4 className="font-extrabold text-sm text-[#1C1C1C] uppercase tracking-widest mb-5">Popular Snacks</h4>
             <ul className="space-y-3">
-              {['Premium Dry Roasted', 'Large Grade Makhana', 'Medium Grade Makhana', 'Rock Salt & Pepper', 'Pudina Fresh', 'Chilli Cheese'].map(p => (
-                <li key={p}><Link href="/products" className="text-gray-500 text-sm hover:text-[#D4AF37] transition-colors">{p}</Link></li>
+              {[
+                'Premium Dry Roasted',
+                'Rock Salt & Pepper',
+                'Pudina Fresh',
+                'Chilli Cheese',
+                'Large Grade Makhana',
+                'Medium Grade Makhana',
+              ].map(p => (
+                <li key={p}>
+                  <Link
+                    href="/products"
+                    className="flex items-center gap-2 text-[#686B78] text-sm hover:text-brand transition-colors group"
+                  >
+                    <FiArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity text-brand" />
+                    {p}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="font-bold text-sm uppercase tracking-widest text-white mb-5">Contact Us</h4>
+            <h4 className="font-extrabold text-sm text-[#1C1C1C] uppercase tracking-widest mb-5">Contact Us</h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-sm text-gray-500">
-                <FiMapPin size={15} className="mt-0.5 flex-shrink-0 text-[#D4AF37]" />
-                <a href="https://www.google.com/maps/place/MakRiva+Traders/@29.3245682,76.3501392,860m/data=!3m2!1e3!4b1!4m6!3m5!1s0x391205608b63d11b:0xdd30b1c691b84a7a!8m2!3d29.3245635!4d76.3527141!16s%2Fg%2F11mlyj2py2?entry=ttu&g_ep=EgoyMDI2MDQxMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition-colors">Jawahar Nagar, Safidon Road, Near Deep Palace Hotel, Jind, Haryana, 126102</a>
+              <li className="flex items-start gap-3 text-sm text-[#686B78]">
+                <div className="w-8 h-8 rounded-xl bg-brand-50 flex items-center justify-center shrink-0 mt-0.5">
+                  <FiMapPin size={14} className="text-brand" />
+                </div>
+                <a
+                  href="https://www.google.com/maps/place/MakRiva+Traders"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-brand transition-colors leading-snug"
+                >
+                  Jawahar Nagar, Safidon Road, Near Deep Palace Hotel, Jind, Haryana 126102
+                </a>
               </li>
-              <li className="flex items-center gap-3 text-sm text-gray-500">
-                <FiMail size={15} className="flex-shrink-0 text-[#D4AF37]" />
-                <a href="mailto:makrivatraders@gmail.com" className="hover:text-[#D4AF37] transition-colors">makrivatraders@gmail.com</a>
+              <li className="flex items-center gap-3 text-sm text-[#686B78]">
+                <div className="w-8 h-8 rounded-xl bg-brand-50 flex items-center justify-center shrink-0">
+                  <FiMail size={14} className="text-brand" />
+                </div>
+                <a href="mailto:makrivatraders@gmail.com" className="hover:text-brand transition-colors">
+                  makrivatraders@gmail.com
+                </a>
               </li>
-              <li className="flex items-center gap-3 text-sm text-gray-500">
-                <FiPhone size={15} className="flex-shrink-0 text-[#D4AF37]" />
-                <a href="tel:+918398030577" className="hover:text-[#D4AF37] transition-colors">+91 83980 30577</a>
+              <li className="flex items-center gap-3 text-sm text-[#686B78]">
+                <div className="w-8 h-8 rounded-xl bg-brand-50 flex items-center justify-center shrink-0">
+                  <FiPhone size={14} className="text-brand" />
+                </div>
+                <a href="tel:+918398030577" className="hover:text-brand transition-colors">
+                  +91 83980 30577
+                </a>
               </li>
             </ul>
+
+            {/* Delivery promise */}
+            <div className="mt-6 p-4 bg-[#F8F8F8] rounded-xl border border-[#F0F0F0]">
+              <p className="text-xs font-bold text-[#1C1C1C] mb-1">🚚 We deliver across India</p>
+              <p className="text-xs text-[#686B78]">Free delivery on orders above ₹499</p>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-[#1E1E1E] pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-gray-600 text-xs">© {new Date().getFullYear()} MakRiva. All rights reserved.</p>
-          <div className="flex items-center gap-4 text-xs text-gray-600">
-            <span>Payments secured by</span>
-            <span className="text-[#D4AF37] font-semibold">Instamojo</span>
+        {/* ── Bottom bar ───────────────────────────────────────── */}
+        <div className="border-t border-[#F0F0F0] pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-[#93959F] text-xs">
+            © {new Date().getFullYear()} MakRiva. All rights reserved.
+          </p>
+          <div className="flex items-center gap-4 text-xs text-[#93959F]">
+            <span>Secure payments via</span>
+            <span className="font-bold text-brand">Instamojo</span>
+            <span className="text-[#E9E9EB]">|</span>
+            <span>🔒 SSL secured</span>
           </div>
         </div>
       </div>

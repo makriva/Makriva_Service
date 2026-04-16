@@ -5,129 +5,186 @@
 @tailwind utilities;
 
 :root {
-  --gold: #D4AF37;
-  --gold-light: #F0D060;
-  --pink: #E90064;
-  --dark: #0A0A0A;
-  --dark-card: #111111;
-  --dark-border: #1E1E1E;
+  --brand:         #FF5200;
+  --brand-light:   #FF7340;
+  --brand-dark:    #E84700;
+  --brand-50:      #FFF3EE;
+  --brand-100:     #FFE4D6;
+  --surface:       #FFFFFF;
+  --surface-subtle:#FFF8F5;
+  --surface-muted: #F8F8F8;
+  --ink:           #1C1C1C;
+  --ink-light:     #686B78;
+  --ink-lighter:   #93959F;
+  --ink-line:      #E9E9EB;
+  --veg:           #60B246;
+  --shadow-card:   0 2px 8px rgba(0,0,0,0.08);
+  --shadow-hover:  0 12px 32px rgba(0,0,0,0.14);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--dark);
-  color: #fff;
+  background: #FAFAFA;
+  color: var(--ink);
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden;
 }
 
-/* Gold text */
-.text-gold { color: var(--gold); }
-.text-gold-gradient {
-  background: linear-gradient(135deg, #D4AF37, #F0D060, #A8860A);
+/* ─── Brand color helpers ────────────────────────── */
+.text-brand          { color: var(--brand); }
+.bg-brand            { background-color: var(--brand); }
+
+/* Kept so all old code still works */
+.text-gold           { color: var(--brand); }
+.text-gold-gradient,
+.text-brand-gradient {
+  background: linear-gradient(135deg, #FF5200, #FF8C00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Gold button */
-.btn-gold {
-  @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold tracking-wider uppercase text-sm rounded-none transition-all duration-300;
-  background: linear-gradient(135deg, #D4AF37, #F0D060);
-  color: #000;
+/* ─── Buttons ────────────────────────────────────── */
+.btn-gold,
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold text-sm rounded-xl text-white transition-all duration-200;
+  background: var(--brand);
 }
-.btn-gold:hover {
-  background: linear-gradient(135deg, #F0D060, #D4AF37);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+.btn-gold:hover,
+.btn-primary:hover {
+  background: var(--brand-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(255,82,0,0.35);
 }
+.btn-gold:active,
+.btn-primary:active { transform: translateY(0); }
 
 .btn-outline-gold {
-  @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold tracking-wider uppercase text-sm rounded-none transition-all duration-300 border;
-  border-color: var(--gold);
-  color: var(--gold);
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold text-sm rounded-xl border-2 transition-all duration-200;
+  border-color: var(--brand);
+  color: var(--brand);
   background: transparent;
 }
 .btn-outline-gold:hover {
-  background: var(--gold);
-  color: #000;
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(255,82,0,0.25);
 }
 
-/* Section heading */
+/* ─── Typography ─────────────────────────────────── */
 .section-title {
-  @apply text-3xl md:text-4xl font-bold mb-2;
-  font-family: 'Playfair Display', serif;
+  @apply text-2xl md:text-3xl font-bold text-[#1C1C1C];
 }
-.section-subtitle { @apply text-gray-400 text-sm tracking-widest uppercase mb-8; }
+.section-subtitle { @apply text-[#686B78] text-sm tracking-wide; }
+
 .gold-line {
-  width: 60px; height: 2px;
-  background: linear-gradient(90deg, #D4AF37, #F0D060);
-  margin: 12px auto 32px;
+  width: 48px; height: 3px;
+  background: var(--brand);
+  border-radius: 2px;
+  margin: 8px auto 28px;
 }
 
-/* Card */
+/* ─── Product card ───────────────────────────────── */
 .product-card-new {
-  background: var(--dark-card);
-  border: 1px solid var(--dark-border);
-  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  background: #FFFFFF;
+  border: 1px solid #F0F0F0;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s;
 }
 .product-card-new:hover {
-  border-color: var(--gold);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(212, 175, 55, 0.15);
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.13);
 }
 
-/* Input — must be in @layer components so Tailwind utilities (pl-10, etc.) take precedence */
-@layer components {
-  .input-dark {
-    @apply w-full px-4 py-3 text-white border outline-none transition-colors duration-200;
-    background-color: #0D0D0D;
-    border-color: var(--dark-border);
-    border-radius: 0;
-    caret-color: #D4AF37;
-    font-size: 1rem;
-  }
-  .input-dark:focus { 
-    border-color: var(--gold); 
-  }
-  .input-dark::placeholder { 
-    color: #666666;
-    opacity: 1;
-  }
-  .input-dark:focus::placeholder { 
-    color: #888888;
-  }
-  .input-dark::-webkit-input-placeholder { 
-    color: #666666;
-    opacity: 1;
-  }
-  .input-dark:focus::-webkit-input-placeholder { 
-    color: #888888;
-  }
-  .input-dark option { background: #111; color: #fff; }
-  
-  /* Ensure no text overlap with placeholder */
-  .input-dark[value]:not([value=""]) {
-    color: #ffffff;
-  }
+/* ─── Category pills ─────────────────────────────── */
+.category-pill {
+  @apply px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap cursor-pointer border transition-all duration-200 select-none;
+  border-color: var(--ink-line);
+  color: var(--ink-light);
+  background: white;
+}
+.category-pill:hover { border-color: var(--brand); color: var(--brand); }
+.category-pill.active {
+  background: var(--brand);
+  color: white;
+  border-color: var(--brand);
+  box-shadow: 0 4px 12px rgba(255,82,0,0.25);
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #111; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--gold); }
-
-/* Badge */
+/* ─── Badge ──────────────────────────────────────── */
 .badge-gold {
-  @apply text-xs font-bold px-2 py-0.5 uppercase tracking-wider;
-  background: linear-gradient(135deg, #D4AF37, #F0D060);
-  color: #000;
+  @apply text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide text-white;
+  background: var(--brand);
 }
 
-/* Page transition */
-.page-enter { animation: fadeIn 0.4s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+/* ─── Inputs ─────────────────────────────────────── */
+@layer components {
+  .input-dark,
+  .input-food {
+    @apply w-full px-4 py-3 border rounded-xl outline-none transition-all duration-200 bg-white text-sm;
+    color: var(--ink);
+    border-color: var(--ink-line);
+    caret-color: var(--brand);
+  }
+  .input-dark:focus,
+  .input-food:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(255,82,0,0.10);
+  }
+  .input-dark::placeholder,
+  .input-food::placeholder { color: var(--ink-lighter); }
+  .input-dark option,
+  .input-food option { background: white; color: var(--ink); }
+}
+
+/* ─── Scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: #F8F8F8; }
+::-webkit-scrollbar-thumb  { background: #DDD; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand); }
+
+/* ─── Scrollbar hide utility ─────────────────────── */
+.scrollbar-hide { scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ─── Page transition ────────────────────────────── */
+.page-enter { animation: fadeIn 0.35s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ─── Health/feature scroll ──────────────────────── */
+@keyframes health-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.health-scroll { animation: health-scroll 35s linear infinite; }
+
+/* ─── Add-to-cart ripple feedback ────────────────── */
+@keyframes rippleOut {
+  0%   { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ─── Floating cart button pulse ─────────────────── */
+@keyframes cartBounce {
+  0%, 100% { transform: scale(1); }
+  40%       { transform: scale(1.2); }
+  70%       { transform: scale(0.95); }
+}
+.animate-cart-bounce { animation: cartBounce 0.45s ease; }
+
+/* ─── Skeleton shimmer ───────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #F0F0F0 25%, #E8E8E8 50%, #F0F0F0 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease infinite;
+}

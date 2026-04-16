@@ -51,7 +51,7 @@ export default function ProductDetailPage() {
     <>
       <Navbar />
       <div className="min-h-screen flex items-center justify-center pt-20">
-        <div className="w-8 h-8 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin" />
       </div>
       <Footer />
     </>
@@ -61,7 +61,7 @@ export default function ProductDetailPage() {
     <>
       <Navbar />
       <div className="min-h-screen flex flex-col items-center justify-center pt-20 gap-4">
-        <h1 className="text-2xl text-gray-400">Product not found</h1>
+        <h1 className="text-2xl text-[#686B78]">Product not found</h1>
         <Link href="/products" className="btn-gold">Back to Shop</Link>
       </div>
       <Footer />
@@ -79,30 +79,33 @@ export default function ProductDetailPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-24 pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-8">
-            <Link href="/" className="hover:text-[#D4AF37]">Home</Link>
-            <span>/</span>
-            <Link href="/products" className="hover:text-[#D4AF37]">Shop</Link>
-            <span>/</span>
-            <span className="text-gray-300">{product.name}</span>
-          </div>
+      <main className="bg-[#FAFAFA] min-h-screen pt-[68px] pb-20">
 
-          <div className="grid lg:grid-cols-2 gap-12">
+        {/* Breadcrumb */}
+        <div className="bg-white border-b border-[#F0F0F0] py-3">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-sm text-[#686B78]">
+            <Link href="/" className="hover:text-brand transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/products" className="hover:text-brand transition-colors">Products</Link>
+            <span>/</span>
+            <span className="text-[#1C1C1C] font-medium truncate">{product.name}</span>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid lg:grid-cols-2 gap-10">
             {/* Images */}
-            <div className="space-y-4">
-              <div className="relative aspect-square bg-[#111] overflow-hidden">
+            <div className="space-y-3">
+              <div className="relative aspect-square bg-white border border-[#F0F0F0] rounded-2xl overflow-hidden">
                 <Image src={images[activeImage]} alt={product.name} fill className="object-cover" />
-                {discount && <span className="absolute top-4 left-4 badge-gold bg-green-600 text-white" style={{ background: '#16a34a' }}>-{discount}%</span>}
+                {discount && <span className="absolute top-4 left-4 badge-gold" style={{ background: '#16a34a' }}>-{discount}%</span>}
                 {product.is_bestseller && <span className="absolute top-4 right-4 badge-gold">Bestseller</span>}
               </div>
               {images.length > 1 && (
                 <div className="flex gap-3 overflow-x-auto">
                   {images.map((img: string, i: number) => (
                     <button key={i} onClick={() => setActiveImage(i)}
-                      className={`relative w-20 h-20 flex-shrink-0 overflow-hidden border-2 transition-colors ${i === activeImage ? 'border-[#D4AF37]' : 'border-transparent'}`}>
+                      className={`relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-xl border-2 transition-colors ${i === activeImage ? 'border-brand' : 'border-[#F0F0F0]'}`}>
                       <Image src={img} alt="" fill className="object-cover" />
                     </button>
                   ))}
@@ -111,51 +114,51 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Info */}
-            <div>
-              <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">{product.weight}</p>
-              <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>{product.name}</h1>
+            <div className="bg-white rounded-2xl border border-[#F0F0F0] shadow-card p-6 lg:p-8">
+              {product.weight && <p className="text-xs font-bold text-[#686B78] uppercase tracking-widest mb-2">{product.weight}</p>}
+              <h1 className="text-2xl md:text-3xl font-extrabold text-[#1C1C1C] mb-4">{product.name}</h1>
 
               {/* Rating */}
-              <div className="flex items-center gap-2 mb-6">
+              <div className="flex items-center gap-2 mb-5">
                 <div className="flex gap-0.5">
-                  {[1,2,3,4,5].map(s => <FiStar key={s} size={14} className="text-[#D4AF37] fill-current" />)}
+                  {[1,2,3,4,5].map(s => <FiStar key={s} size={14} className="text-[#FFB800] fill-current" />)}
                 </div>
-                <span className="text-sm text-gray-400">4.8 (156 reviews)</span>
+                <span className="text-sm text-[#686B78]">4.8 (156 reviews)</span>
               </div>
 
               {/* Price */}
-              <div className="flex items-baseline gap-3 mb-6">
-                <span className="text-3xl font-bold text-[#D4AF37]">₹{product.price}</span>
+              <div className="flex items-baseline gap-3 mb-5">
+                <span className="text-3xl font-extrabold text-brand">₹{product.price}</span>
                 {product.original_price && (
-                  <span className="text-lg text-gray-500 line-through">₹{product.original_price}</span>
+                  <span className="text-lg text-[#686B78] line-through">₹{product.original_price}</span>
                 )}
-                {discount && <span className="text-green-400 text-sm font-semibold">{discount}% off</span>}
+                {discount && <span className="text-green-600 text-sm font-bold bg-green-50 px-2 py-0.5 rounded-full">{discount}% off</span>}
               </div>
 
               {product.short_description && (
-                <p className="text-gray-400 mb-6 leading-relaxed">{product.short_description}</p>
+                <p className="text-[#686B78] mb-5 leading-relaxed text-sm">{product.short_description}</p>
               )}
 
               {/* Quantity + Add to cart */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className="flex items-center border border-[#222]">
-                  <button onClick={() => setQty(q => Math.max(1, q - 1))} className="w-10 h-12 flex items-center justify-center text-gray-400 hover:text-[#D4AF37] transition-colors"><FiMinus size={14} /></button>
-                  <span className="w-10 text-center font-semibold">{qty}</span>
-                  <button onClick={() => setQty(q => q + 1)} className="w-10 h-12 flex items-center justify-center text-gray-400 hover:text-[#D4AF37] transition-colors"><FiPlus size={14} /></button>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center border border-[#E9E9EB] rounded-xl overflow-hidden">
+                  <button onClick={() => setQty(q => Math.max(1, q - 1))} className="w-10 h-11 flex items-center justify-center text-[#686B78] hover:text-brand hover:bg-brand-50 transition-colors"><FiMinus size={14} /></button>
+                  <span className="w-10 text-center font-bold text-[#1C1C1C]">{qty}</span>
+                  <button onClick={() => setQty(q => q + 1)} className="w-10 h-11 flex items-center justify-center text-[#686B78] hover:text-brand hover:bg-brand-50 transition-colors"><FiPlus size={14} /></button>
                 </div>
                 <button onClick={handleAddToCart} className="btn-gold flex-1 gap-2">
                   <FiShoppingCart size={18} /> Add to Cart
                 </button>
               </div>
 
-              <Link href="/checkout" className="btn-outline-gold w-full block text-center mb-8">Buy Now</Link>
+              <Link href="/checkout" className="btn-outline-gold w-full block text-center mb-6">Buy Now</Link>
 
               {/* Features */}
-              <div className="grid grid-cols-3 gap-4 py-6 border-t border-b border-[#1E1E1E] mb-8">
-                {[['🌿', 'Natural'], ['📦', 'Fresh Pack'], ['🚚', 'Fast Delivery']].map(([icon, label]) => (
+              <div className="grid grid-cols-3 gap-3 py-5 border-t border-b border-[#F0F0F0] mb-5">
+                {[['🌿', 'Natural'], ['📦', 'Fresh Pack'], ['🚚', 'Pan-India']].map(([icon, label]) => (
                   <div key={label} className="text-center">
                     <div className="text-2xl mb-1">{icon}</div>
-                    <div className="text-xs text-gray-500">{label}</div>
+                    <div className="text-xs font-semibold text-[#686B78]">{label}</div>
                   </div>
                 ))}
               </div>
@@ -163,8 +166,8 @@ export default function ProductDetailPage() {
               {/* Description */}
               {product.description && (
                 <div>
-                  <h3 className="font-semibold text-sm uppercase tracking-wider text-gray-300 mb-3">About this product</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed whitespace-pre-line">{product.description}</p>
+                  <h3 className="font-extrabold text-xs uppercase tracking-widest text-[#1C1C1C] mb-3">About this product</h3>
+                  <p className="text-[#686B78] text-sm leading-relaxed whitespace-pre-line">{product.description}</p>
                 </div>
               )}
             </div>

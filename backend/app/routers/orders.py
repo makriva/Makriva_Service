@@ -109,6 +109,23 @@ def my_orders(db: Session = Depends(get_db), current_user: User = Depends(requir
     return db.query(Order).filter(Order.user_id == current_user.id).order_by(Order.created_at.desc()).all()
 
 
+@router.get("/my/last-address")
+def get_last_order_address(db: Session = Depends(get_db), current_user: User = Depends(require_user)):
+    """Return shipping details from the user's most recent order for pre-filling checkout."""
+    order = db.query(Order).filter(Order.user_id == current_user.id).order_by(Order.created_at.desc()).first()
+    if not order:
+        return None
+    return {
+        "shipping_name":    order.shipping_name,
+        "shipping_email":   order.shipping_email,
+        "shipping_phone":   order.shipping_phone,
+        "shipping_address": order.shipping_address,
+        "shipping_city":    order.shipping_city,
+        "shipping_state":   order.shipping_state,
+        "shipping_pincode": order.shipping_pincode,
+    }
+
+
 @router.get("/number/{order_number}", response_model=OrderOut)
 def get_order_by_number(order_number: str, db: Session = Depends(get_db), current_user: User = Depends(require_user)):
     order = db.query(Order).filter(Order.order_number == order_number).first()

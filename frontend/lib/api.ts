@@ -42,6 +42,7 @@ export const clearCart = () => api.delete('/api/cart').then(r => r.data);
 // Orders
 export const createOrder = (data: object) => api.post('/api/orders', data).then(r => r.data);
 export const getMyOrders = () => api.get('/api/orders/my').then(r => r.data);
+export const getLastOrderAddress = () => api.get('/api/orders/my/last-address').then(r => r.data);
 export const getOrder = (id: string) => api.get(`/api/orders/${id}`).then(r => r.data);
 export const getOrderByNumber = (orderNumber: string) => api.get(`/api/orders/number/${orderNumber}`).then(r => r.data);
 
