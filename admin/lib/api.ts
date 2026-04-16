@@ -72,4 +72,18 @@ export const deleteDiscount = (id: string) => api.delete(`/api/discounts/${id}`)
 export const getUsers = (params?: object) => api.get('/api/users', { params }).then(r => r.data);
 export const toggleUserActive = (id: string) => api.put(`/api/users/${id}/toggle-active`).then(r => r.data);
 
+// Contact Queries
+export const getContactQueries = () => api.get('/api/contact/queries').then(r => r.data);
+export const markQueryViewed = (id: string) => api.put(`/api/contact/queries/${id}/viewed`).then(r => r.data);
+
+// Newsletter
+export const getNewsletterSignups = () => api.get('/api/contact/newsletter/list').then(r => r.data);
+export const markNewsletterViewed = (id: string) => api.put(`/api/contact/newsletter/${id}/viewed`).then(r => r.data);
+
+// Instagram Reels
+export const getAdminReels = () => api.get('/api/reels/all').then(r => r.data);
+export const addReel = (data: object) => api.post('/api/reels', data).then(r => r.data);
+export const updateReel = (id: string, data: object) => api.put(`/api/reels/${id}`, data).then(r => r.data);
+export const deleteReel = (id: string) => api.delete(`/api/reels/${id}`).then(r => r.data);
+
 export default api;

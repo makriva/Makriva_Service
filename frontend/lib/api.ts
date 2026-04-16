@@ -50,6 +50,15 @@ export const getOrderByNumber = (orderNumber: string) => api.get(`/api/orders/nu
 export const applyDiscount = (code: string, order_amount: number) =>
   api.post('/api/discounts/apply', { code, order_amount }).then(r => r.data);
 
+// Contact & Newsletter
+export const submitContact = (data: { name: string; email: string; subject: string; message: string }) =>
+  api.post('/api/contact', data).then(r => r.data);
+export const newsletterSubscribe = (email: string) =>
+  api.post('/api/contact/newsletter', { email }).then(r => r.data);
+
+// Instagram Reels
+export const getReels = () => api.get('/api/reels').then(r => r.data);
+
 // Settings
 export const getPublicSettings = () =>
   api.get('/api/settings/public').then(r => r.data);

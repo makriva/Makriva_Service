@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import { submitContact } from '@/lib/api';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -13,10 +14,15 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    await new Promise(r => setTimeout(r, 1000));
-    toast.success('Message sent! We\'ll reply within 24 hours.');
-    setForm({ name: '', email: '', subject: '', message: '' });
-    setSending(false);
+    try {
+      await submitContact(form);
+      toast.success('Message sent! We\'ll reply within 24 hours.');
+      setForm({ name: '', email: '', subject: '', message: '' });
+    } catch {
+      toast.error('Failed to send. Please try again.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (

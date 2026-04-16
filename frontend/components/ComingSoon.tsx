@@ -3,17 +3,23 @@
 import { useState } from 'react';
 import { FiBell } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import { newsletterSubscribe } from '@/lib/api';
 
 export default function ComingSoon() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    setSubmitted(true);
-    toast.success('You\'re on the list! We\'ll notify you first.');
-    setEmail('');
+    try {
+      await newsletterSubscribe(email);
+      setSubmitted(true);
+      toast.success('You\'re on the list! We\'ll notify you first.');
+      setEmail('');
+    } catch {
+      toast.error('Something went wrong. Please try again.');
+    }
   };
 
   return (

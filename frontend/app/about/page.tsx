@@ -27,7 +27,7 @@ export default function AboutPage() {
               <h2 className="section-title text-left mb-4">Premium Makhana,<br />Pure Origins</h2>
               <div className="gold-line mx-0 mb-6" />
               <div className="space-y-4 text-[#686B78] leading-relaxed">
-                <p>MakRiva was born from a simple belief — that healthy snacking should never mean compromising on taste or quality. We source the finest fox nuts (makhana) directly from the fertile wetlands of Bihar and Madhya Pradesh, working hand-in-hand with local farmers.</p>
+                <p>MakRiva was born from a simple belief — that healthy snacking should never mean compromising on taste or quality. We source the finest fox nuts (makhana) directly from the fertile wetlands of Bihar, working hand-in-hand with local farmers.</p>
                 <p>Every batch is carefully graded, cleaned, and processed in our state-of-the-art facility before being slow-roasted or flavoured with natural seasonings. No artificial additives, no preservatives — just pure makhana goodness.</p>
                 <p>From our farm-to-pack promise to our zero-waste packaging initiative, everything we do reflects our commitment to quality, sustainability, and your health.</p>
               </div>

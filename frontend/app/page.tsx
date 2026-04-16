@@ -7,6 +7,7 @@ import WhyMakriva from '@/components/WhyMakriva';
 import ComingSoon from '@/components/ComingSoon';
 import Testimonials from '@/components/Testimonials';
 import CTABanner from '@/components/CTABanner';
+import InstagramReels from '@/components/InstagramReels';
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
         <HealthBenefits />
         <WhyMakriva />
         <ComingSoon />
+        <InstagramReels />
         <Testimonials />
         <CTABanner />
       </main>

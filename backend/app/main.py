@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from app.config import settings
 from app.database import engine, Base
-from app.routers import auth, products, categories, cart, discounts, orders, payments, upload, users, settings as settings_router
+from app.models import contact as _contact_models, reel as _reel_models  # noqa: F401 – registers tables
+from app.routers import auth, products, categories, cart, discounts, orders, payments, upload, users, settings as settings_router, contact, reels
 
 # Create tables on startup (for dev — use Alembic in prod)
 Base.metadata.create_all(bind=engine)
@@ -11,6 +12,7 @@ Base.metadata.create_all(bind=engine)
 # Add new columns to existing tables if they don't exist yet
 with engine.connect() as _conn:
     _conn.execute(text("ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking_url VARCHAR"))
+    _conn.execute(text("ALTER TABLE instagram_reels ADD COLUMN IF NOT EXISTS video_url VARCHAR"))
     _conn.commit()
 
 app = FastAPI(
@@ -37,6 +39,8 @@ app.include_router(payments.router)
 app.include_router(upload.router)
 app.include_router(users.router)
 app.include_router(settings_router.router)
+app.include_router(contact.router)
+app.include_router(reels.router)
 
 
 @app.get("/")

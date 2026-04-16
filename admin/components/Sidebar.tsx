@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { FiHome, FiPackage, FiShoppingBag, FiTag, FiUsers, FiGrid, FiLogOut, FiMenu, FiX } from 'react-icons/fi';
+import { FiHome, FiPackage, FiShoppingBag, FiTag, FiUsers, FiGrid, FiLogOut, FiMenu, FiX, FiMessageSquare, FiInstagram } from 'react-icons/fi';
 import Cookies from 'js-cookie';
 import { useState } from 'react';
 
@@ -14,6 +14,8 @@ const NAV = [
   { href: '/dashboard/discounts', label: 'Discounts', icon: FiTag },
   { href: '/dashboard/users', label: 'Users', icon: FiUsers },
   { href: '/dashboard/categories', label: 'Categories', icon: FiGrid },
+  { href: '/dashboard/queries', label: 'Queries', icon: FiMessageSquare },
+  { href: '/dashboard/reels', label: 'Reels', icon: FiInstagram },
 ];
 
 export default function Sidebar() {

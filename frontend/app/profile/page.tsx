@@ -33,57 +33,80 @@ export default function ProfilePage() {
     }
   };
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin" /></div>;
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center bg-[#FAFAFA]">
+      <div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
 
   return (
     <>
       <Navbar />
-      <main className="pt-24 pb-20">
+      <main className="pt-24 pb-20 bg-[#FAFAFA] min-h-screen">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Avatar + name */}
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-16 h-16 rounded-full bg-[#1a1a1a] border border-[#D4AF37]/30 flex items-center justify-center">
-              <FiUser size={28} className="text-[#D4AF37]" />
+            <div className="w-16 h-16 rounded-full bg-brand/10 border-2 border-brand/20 flex items-center justify-center">
+              <FiUser size={28} className="text-brand" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold">{user?.full_name || 'My Profile'}</h1>
-              <p className="text-gray-500 text-sm">{user?.email}</p>
+              <h1 className="text-2xl font-bold text-[#1C1C1C]">{user?.full_name || 'My Profile'}</h1>
+              <p className="text-[#686B78] text-sm">{user?.email}</p>
             </div>
           </div>
 
-          <form onSubmit={handleSave} className="bg-[#0D0D0D] border border-[#1E1E1E] p-6 space-y-5">
-            <h2 className="font-bold text-sm uppercase tracking-wider">Personal Information</h2>
+          <form
+            onSubmit={handleSave}
+            className="bg-white border border-gray-100 rounded-2xl p-6 space-y-5"
+            style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}
+          >
+            <h2 className="font-bold text-xs text-[#93959F] uppercase tracking-wider">Personal Information</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { key: 'full_name', label: 'Full Name', type: 'text' },
                 { key: 'phone', label: 'Phone', type: 'tel' },
               ].map(f => (
                 <div key={f.key}>
-                  <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">{f.label}</label>
-                  <input type={f.type} value={(form as any)[f.key]} onChange={e => setForm(ff => ({ ...ff, [f.key]: e.target.value }))} className="input-dark" />
+                  <label className="block text-xs text-[#686B78] uppercase tracking-wider mb-1">{f.label}</label>
+                  <input
+                    type={f.type}
+                    value={(form as any)[f.key]}
+                    onChange={e => setForm(ff => ({ ...ff, [f.key]: e.target.value }))}
+                    className="input-food"
+                  />
                 </div>
               ))}
             </div>
 
-            <h2 className="font-bold text-sm uppercase tracking-wider pt-2">Default Shipping Address</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                { key: 'address_line1', label: 'Address Line 1', span: true },
-                { key: 'address_line2', label: 'Address Line 2', span: true },
-                { key: 'city', label: 'City' },
-                { key: 'state', label: 'State' },
-                { key: 'pincode', label: 'PIN Code' },
-              ].map(f => (
-                <div key={f.key} className={(f as any).span ? 'sm:col-span-2' : ''}>
-                  <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">{f.label}</label>
-                  <input type="text" value={(form as any)[f.key]} onChange={e => setForm(ff => ({ ...ff, [f.key]: e.target.value }))} className="input-dark" />
-                </div>
-              ))}
+            <div className="border-t border-gray-100 pt-4">
+              <h2 className="font-bold text-xs text-[#93959F] uppercase tracking-wider mb-4">Default Shipping Address</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { key: 'address_line1', label: 'Address Line 1', span: true },
+                  { key: 'address_line2', label: 'Address Line 2', span: true },
+                  { key: 'city', label: 'City' },
+                  { key: 'state', label: 'State' },
+                  { key: 'pincode', label: 'PIN Code' },
+                ].map(f => (
+                  <div key={f.key} className={(f as any).span ? 'sm:col-span-2' : ''}>
+                    <label className="block text-xs text-[#686B78] uppercase tracking-wider mb-1">{f.label}</label>
+                    <input
+                      type="text"
+                      value={(form as any)[f.key]}
+                      onChange={e => setForm(ff => ({ ...ff, [f.key]: e.target.value }))}
+                      className="input-food"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <button type="submit" disabled={saving} className="btn-gold gap-2">
+            <button type="submit" disabled={saving} className="btn-gold flex items-center gap-2">
               <FiSave size={16} /> {saving ? 'Saving...' : 'Save Changes'}
             </button>
           </form>
+
         </div>
       </main>
       <Footer />

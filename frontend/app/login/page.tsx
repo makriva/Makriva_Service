@@ -5,8 +5,9 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import Cookies from 'js-cookie';
 import { useAuth } from '@/context/AuthContext';
-import { login as apiLogin } from '@/lib/api';
+import { login as apiLogin, getMe } from '@/lib/api';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook } from 'react-icons/bs';
@@ -27,12 +28,17 @@ function LoginForm() {
   useEffect(() => {
     const token = searchParams.get('token');
     if (token) {
-      import('@/lib/api').then(({ getMe }) => {
-        getMe().then(u => {
+      // Set cookie first so getMe() axios interceptor picks it up
+      Cookies.set('token', token, { expires: 7, sameSite: 'lax' });
+      getMe()
+        .then((u: Parameters<typeof login>[1]) => {
           login(token, u);
           router.push(searchParams.get('redirect') || '/');
+        })
+        .catch(() => {
+          Cookies.remove('token');
+          toast.error('Sign-in failed, please try again');
         });
-      });
     }
   }, [searchParams]);
 
@@ -60,39 +66,39 @@ function LoginForm() {
       <div className="text-center mb-10 lg:hidden">
         <Image src="/images/makriva-logo.png" alt="MakRiva" width={48} height={48} className="object-contain mx-auto mb-4" />
       </div>
-      <h1 className="text-2xl font-bold mb-2">Sign in to your account</h1>
-      <p className="text-gray-500 text-sm mb-8">Don&apos;t have an account? <Link href="/signup" className="text-[#D4AF37] hover:underline">Sign up</Link></p>
+      <h1 className="text-2xl font-bold text-[#1C1C1C] mb-2">Sign in to your account</h1>
+      <p className="text-[#686B78] text-sm mb-8">Don&apos;t have an account? <Link href="/signup" className="text-brand hover:underline font-semibold">Sign up</Link></p>
 
       {/* OAuth buttons */}
       <div className="space-y-3 mb-6">
-        <a href={`${API_URL}/api/auth/google`} className="flex items-center justify-center gap-3 w-full py-3 border border-[#222] bg-[#111] hover:border-[#D4AF37] transition-colors text-sm font-medium">
+        <a href={`${API_URL}/api/auth/google`} className="flex items-center justify-center gap-3 w-full py-3 border border-gray-200 bg-white hover:border-brand hover:shadow-sm transition-all text-sm font-medium text-[#1C1C1C] rounded-xl">
           <FcGoogle size={20} /> Continue with Google
         </a>
-        <a href={`${API_URL}/api/auth/facebook`} className="flex items-center justify-center gap-3 w-full py-3 border border-[#222] bg-[#111] hover:border-[#D4AF37] transition-colors text-sm font-medium">
+        <a href={`${API_URL}/api/auth/facebook`} className="flex items-center justify-center gap-3 w-full py-3 border border-gray-200 bg-white hover:border-blue-400 hover:shadow-sm transition-all text-sm font-medium text-[#1C1C1C] rounded-xl">
           <BsFacebook size={18} className="text-blue-500" /> Continue with Facebook
         </a>
       </div>
 
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex-1 h-px bg-[#1E1E1E]" />
-        <span className="text-xs text-gray-600 uppercase tracking-wider">Or</span>
-        <div className="flex-1 h-px bg-[#1E1E1E]" />
+        <div className="flex-1 h-px bg-gray-200" />
+        <span className="text-xs text-[#93959F] uppercase tracking-wider">Or</span>
+        <div className="flex-1 h-px bg-gray-200" />
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Email</label>
+          <label className="block text-xs text-[#686B78] uppercase tracking-wider mb-1">Email</label>
           <div className="relative">
-            <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={15} />
-            <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="input-dark pl-10" placeholder="you@email.com" />
+            <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#93959F]" size={15} />
+            <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="input-food pl-10" placeholder="you@email.com" />
           </div>
         </div>
         <div>
-          <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Password</label>
+          <label className="block text-xs text-[#686B78] uppercase tracking-wider mb-1">Password</label>
           <div className="relative">
-            <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={15} />
-            <input type={showPw ? 'text' : 'password'} required value={password} onChange={e => setPassword(e.target.value)} className="input-dark pl-10 pr-10" placeholder="••••••••" />
-            <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors">
+            <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#93959F]" size={15} />
+            <input type={showPw ? 'text' : 'password'} required value={password} onChange={e => setPassword(e.target.value)} className="input-food pl-10 pr-10" placeholder="••••••••" />
+            <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#93959F] hover:text-[#1C1C1C] transition-colors">
               {showPw ? <FiEyeOff size={15} /> : <FiEye size={15} />}
             </button>
           </div>
@@ -122,8 +128,8 @@ export default function LoginPage() {
       </div>
 
       {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center px-6 py-12 bg-[#0A0A0A]">
-        <Suspense fallback={<div className="w-8 h-8 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin" />}>
+      <div className="flex-1 flex items-center justify-center px-6 py-12 bg-[#FAFAFA]">
+        <Suspense fallback={<div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin" />}>
           <LoginForm />
         </Suspense>
       </div>

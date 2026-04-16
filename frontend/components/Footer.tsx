@@ -52,7 +52,7 @@ export default function Footer() {
             {/* Social icons */}
             <div className="flex gap-3">
               {[
-                { href: 'https://instagram.com', icon: <FiInstagram size={17} />, label: 'Instagram' },
+                { href: 'https://www.instagram.com/makrivamakhana/', icon: <FiInstagram size={17} />, label: 'Instagram' },
                 { href: 'https://facebook.com',  icon: <FiFacebook size={17} />,  label: 'Facebook' },
                 { href: 'https://youtube.com',   icon: <FiYoutube size={17} />,   label: 'YouTube' },
               ].map(({ href, icon, label }) => (
@@ -100,9 +100,6 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 'Premium Dry Roasted',
-                'Rock Salt & Pepper',
-                'Pudina Fresh',
-                'Chilli Cheese',
                 'Large Grade Makhana',
                 'Medium Grade Makhana',
               ].map(p => (
