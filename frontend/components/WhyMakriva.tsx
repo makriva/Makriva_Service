@@ -17,7 +17,7 @@ export default function WhyMakriva() {
           {/* Image */}
           <div className="relative">
             <div className="relative aspect-[4/5] overflow-hidden">
-              <Image src="/images/banner-about-us.png" alt="Why MakRiva" fill className="object-cover" />
+              <Image src="/images/makriva-holding-packets.png" alt="Why MakRiva" fill className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
             {/* Stats overlay */}

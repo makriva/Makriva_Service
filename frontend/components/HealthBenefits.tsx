@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 const BENEFITS = [
   { icon: '🧠', label: 'Clarity' },
   { icon: '💪', label: 'Rich in Protein' },
@@ -21,6 +23,18 @@ const ITEMS = [...BENEFITS, ...BENEFITS];
 export default function HealthBenefits() {
   return (
     <section className="py-20 overflow-hidden">
+      {/* Banner image */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-14">
+        <div className="relative w-full rounded-2xl overflow-hidden shadow-card" style={{ aspectRatio: '3/1' }}>
+          <Image
+            src="/images/makriva-health-benefits.png"
+            alt="Pure, Healthy & Natural Makhana"
+            fill
+            className="object-cover object-center"
+          />
+        </div>
+      </div>
+
       <div className="text-center mb-12 px-4">
         <p className="section-subtitle">Why Makhana?</p>
         <h2 className="section-title">Health Benefits</h2>

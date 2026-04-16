@@ -10,7 +10,7 @@ export default function AboutPage() {
       <main className="pt-20">
         {/* Hero */}
         <div className="relative h-64 md:h-96 overflow-hidden">
-          <Image src="/images/banner-about-us.png" alt="About MakRiva" fill className="object-cover" />
+          <Image src="/images/makriva-holding-packets.png" alt="About MakRiva" fill className="object-cover" />
           <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
             <div className="text-center">
               <p className="section-subtitle">Our Story</p>

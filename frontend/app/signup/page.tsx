@@ -40,7 +40,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen flex">
       <div className="hidden lg:flex lg:w-1/2 relative">
-        <Image src="/images/banner-about-us.png" alt="" fill className="object-cover" />
+        <Image src="/images/makriva-holding-packets.png" alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 flex flex-col justify-center px-16">
           <Image src="/images/makriva-logo.png" alt="MakRiva" width={60} height={60} className="object-contain mb-6" />

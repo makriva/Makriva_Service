@@ -8,7 +8,7 @@ import { FiSearch, FiClock, FiStar, FiShield, FiArrowRight } from 'react-icons/f
 
 const slides = [
   {
-    image: '/images/makriva-hero-background.png',
+    image: '/images/makriva-gourmet-banner.png',
     tag: '🌾 100% Natural',
     title: 'Premium snacks,\nshipped to you',
     subtitle: 'Handpicked premium makhana from the farms of Bihar — crunchy, healthy & guilt-free.',
@@ -17,7 +17,7 @@ const slides = [
     accent: '#FF5200',
   },
   {
-    image: '/images/banner-healthy-life.jpg',
+    image: '/images/makriva-kheer.png',
     tag: '💪 High Protein',
     title: 'Snack smart,\nlive better',
     subtitle: 'High protein, low calorie — the perfect anytime snack packed with flavour & nutrients.',
@@ -26,7 +26,7 @@ const slides = [
     accent: '#FF6B35',
   },
   {
-    image: '/images/banner-why-makriva.png',
+    image: '/images/makriva-three-combo.png',
     tag: '✨ Premium Quality',
     title: 'Pure origins,\npremium taste',
     subtitle: 'Sourced directly from farmers. Zero additives. Maximum nutrition in every bite.',
