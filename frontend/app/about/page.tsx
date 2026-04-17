@@ -2,7 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-
+import os from 'os';
+os.platform(); // This line is just to prevent "os not found" error during build, as os is a Node.js module and not used in the browser.
 export default function AboutPage() {
   return (
     <>
