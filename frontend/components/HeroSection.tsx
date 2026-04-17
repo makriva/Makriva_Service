@@ -57,13 +57,6 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[88vh] flex flex-col justify-center overflow-hidden pt-16">
-      {/* Preload all slide images so transitions are instant */}
-      <div className="hidden">
-        {slides.map((s, i) => i !== current && (
-          <Image key={s.image} src={s.image} alt="" fill sizes="100vw" priority />
-        ))}
-      </div>
-
       {/* ── Background slide ────────────────────────────────── */}
       <AnimatePresence mode="wait">
         <motion.div

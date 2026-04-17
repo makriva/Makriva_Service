@@ -2,8 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import os from 'os';
-os.platform(); // This line is just to prevent "os not found" error during build, as os is a Node.js module and not used in the browser.
+import { IMG } from '@/lib/staticImages';
+
 export default function AboutPage() {
   return (
     <>
@@ -11,7 +11,7 @@ export default function AboutPage() {
       <main className="pt-20">
         {/* Hero */}
         <div className="relative h-64 md:h-96 overflow-hidden">
-          <Image src="/images/makriva-holding-packets.png" alt="About MakRiva" fill className="object-cover" />
+          <Image src={IMG.makrivaHoldingPackets} alt="About MakRiva" fill sizes="100vw" className="object-cover" priority />
           <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
             <div className="text-center">
               <p className="section-subtitle">Our Story</p>
@@ -34,7 +34,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="relative">
-              <Image src="/images/makhana-origins-bg.png" alt="Makhana Origins" width={600} height={500} className="object-cover" />
+              <Image src={IMG.makhanaOriginsBg} alt="Makhana Origins" width={600} height={500} className="object-cover" />
             </div>
           </div>
 
