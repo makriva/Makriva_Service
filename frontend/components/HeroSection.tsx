@@ -5,10 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiClock, FiStar, FiShield, FiArrowRight } from 'react-icons/fi';
+import { IMG } from '@/lib/staticImages';
 
 const slides = [
   {
-    image: '/images/makriva-gourmet-banner.png',
+    image: IMG.makrivaGourmetBanner,
     tag: '🌾 100% Natural',
     title: 'Premium snacks,\nshipped to you',
     subtitle: 'Handpicked premium makhana from the farms of Bihar — crunchy, healthy & guilt-free.',
@@ -17,7 +18,7 @@ const slides = [
     accent: '#FF5200',
   },
   {
-    image: '/images/makriva-kheer.png',
+    image: IMG.makrivaKheer,
     tag: '💪 High Protein',
     title: 'Snack smart,\nlive better',
     subtitle: 'High protein, low calorie — the perfect anytime snack packed with flavour & nutrients.',
@@ -26,7 +27,7 @@ const slides = [
     accent: '#FF6B35',
   },
   {
-    image: '/images/makriva-three-combo.png',
+    image: IMG.makrivaThreeCombo,
     tag: '✨ Premium Quality',
     title: 'Pure origins,\npremium taste',
     subtitle: 'Sourced directly from farmers. Zero additives. Maximum nutrition in every bite.',
@@ -56,6 +57,13 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[88vh] flex flex-col justify-center overflow-hidden pt-16">
+      {/* Preload all slide images so transitions are instant */}
+      <div className="hidden">
+        {slides.map((s, i) => i !== current && (
+          <Image key={s.image} src={s.image} alt="" fill sizes="100vw" priority />
+        ))}
+      </div>
+
       {/* ── Background slide ────────────────────────────────── */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -66,7 +74,7 @@ export default function HeroSection() {
           transition={{ duration: 0.9 }}
           className="absolute inset-0"
         >
-          <Image src={slide.image} alt="" fill className="object-cover" priority />
+          <Image src={slide.image} alt="" fill sizes="100vw" className="object-cover" priority />
           {/* Gradient overlay — left heavy for text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/20" />
           {/* Bottom gradient so stats row reads cleanly */}

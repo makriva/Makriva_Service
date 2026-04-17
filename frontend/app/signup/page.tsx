@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { IMG } from '@/lib/staticImages';
 import { useAuth } from '@/context/AuthContext';
 import { register as apiRegister } from '@/lib/api';
 import { FiMail, FiLock, FiUser, FiPhone, FiEye, FiEyeOff } from 'react-icons/fi';
@@ -40,10 +41,10 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen flex">
       <div className="hidden lg:flex lg:w-1/2 relative">
-        <Image src="/images/makriva-holding-packets.png" alt="" fill className="object-cover" />
+        <Image src={IMG.makrivaHoldingPackets} alt="" fill sizes="50vw" className="object-cover" />
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 flex flex-col justify-center px-16">
-          <Image src="/images/makriva-logo.png" alt="MakRiva" width={60} height={60} className="object-contain mb-6" />
+          <Image src={IMG.makrivaLogo} alt="MakRiva" width={60} height={60} className="object-contain mb-6" />
           <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
             Join the<br /><span className="text-gold-gradient">MakRiva Family</span>
           </h2>

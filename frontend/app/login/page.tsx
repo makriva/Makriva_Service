@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { IMG } from '@/lib/staticImages';
 import Cookies from 'js-cookie';
 import { useAuth } from '@/context/AuthContext';
 import { login as apiLogin, getMe } from '@/lib/api';
@@ -64,7 +65,7 @@ function LoginForm() {
   return (
     <div className="w-full max-w-md">
       <div className="text-center mb-10 lg:hidden">
-        <Image src="/images/makriva-logo.png" alt="MakRiva" width={48} height={48} className="object-contain mx-auto mb-4" />
+        <Image src={IMG.makrivaLogo} alt="MakRiva" width={48} height={48} className="object-contain mx-auto mb-4" />
       </div>
       <h1 className="text-2xl font-bold text-[#1C1C1C] mb-2">Sign in to your account</h1>
       <p className="text-[#686B78] text-sm mb-8">Don&apos;t have an account? <Link href="/signup" className="text-brand hover:underline font-semibold">Sign up</Link></p>
@@ -116,10 +117,10 @@ export default function LoginPage() {
     <div className="min-h-screen flex">
       {/* Left panel */}
       <div className="hidden lg:flex lg:w-1/2 relative">
-        <Image src="/images/banner-healthy-life.jpg" alt="" fill className="object-cover" />
+        <Image src={IMG.bannerHealthyLife} alt="" fill sizes="50vw" className="object-cover" />
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 flex flex-col justify-center px-16">
-          <Image src="/images/makriva-logo.png" alt="MakRiva" width={60} height={60} className="object-contain mb-6" />
+          <Image src={IMG.makrivaLogo} alt="MakRiva" width={60} height={60} className="object-contain mb-6" />
           <h2 className="text-4xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
             Welcome Back to<br /><span className="text-gold-gradient">MakRiva</span>
           </h2>

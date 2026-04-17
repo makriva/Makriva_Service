@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { IMG } from '@/lib/staticImages';
 
 const BENEFITS = [
   { icon: '🧠', label: 'Clarity' },
@@ -27,9 +28,10 @@ export default function HealthBenefits() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-14">
         <div className="relative w-full rounded-2xl overflow-hidden shadow-card" style={{ aspectRatio: '3/1' }}>
           <Image
-            src="/images/makriva-health-benefits.png"
+            src={IMG.makrivaHealthBenefits}
             alt="Pure, Healthy & Natural Makhana"
             fill
+            sizes="(max-width: 768px) 100vw, 1280px"
             className="object-cover object-center"
           />
         </div>

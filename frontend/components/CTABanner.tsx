@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { IMG } from '@/lib/staticImages';
 
 export default function CTABanner() {
   return (
     <section className="relative py-24 overflow-hidden">
       <div className="absolute inset-0">
-        <Image src="/images/banner-medium-grade.jpg" alt="" fill className="object-cover opacity-30" />
+        <Image src={IMG.bannerMediumGrade} alt="" fill sizes="100vw" className="object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black" />
       </div>
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

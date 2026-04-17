@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { IMG } from '@/lib/staticImages';
 import { FiInstagram, FiFacebook, FiYoutube, FiMail, FiPhone, FiMapPin, FiArrowRight } from 'react-icons/fi';
 
 export default function Footer() {
@@ -34,7 +35,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-xl overflow-hidden bg-brand-50 flex items-center justify-center">
-                <Image src="/images/makriva-logo.png" alt="MakRiva" width={40} height={40} className="object-contain" />
+                <Image src={IMG.makrivaLogo} alt="MakRiva" width={40} height={40} className="object-contain" />
               </div>
               <span className="font-extrabold text-xl text-brand tracking-tight">MakRiva</span>
             </div>

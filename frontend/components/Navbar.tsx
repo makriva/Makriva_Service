@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { IMG } from '@/lib/staticImages';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import {
@@ -57,7 +58,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center gap-2.5 shrink-0">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden bg-brand-50">
                 <Image
-                  src="/images/makriva-logo.png"
+                  src={IMG.makrivaLogo}
                   alt="MakRiva"
                   width={36}
                   height={36}
