@@ -449,8 +449,35 @@ export default function ProductDetailPage() {
 
               {/* Additional Details */}
               {activeTab === 2 && (
-                <div>
-                  {(product.sku || product.hsn_code || Object.keys(additionalData).length > 0) ? (
+                <div className="space-y-6">
+                  {/* Product description paragraph */}
+                  {additionalData.description && (
+                    <p className="text-sm text-[#686B78] leading-relaxed">{String(additionalData.description)}</p>
+                  )}
+
+                  {/* Highlights bullet list */}
+                  {Array.isArray(additionalData.highlights) && additionalData.highlights.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#1C1C1C] mb-3 uppercase tracking-wider">Highlights</h4>
+                      <ul className="space-y-2">
+                        {(additionalData.highlights as string[]).map((h: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2 text-sm text-[#686B78]">
+                            <span className="text-brand mt-0.5 shrink-0">✓</span>
+                            <span>{h}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Key-value table: SKU/HSN/weight + any simple string fields + nested additional_details object */}
+                  {(product.sku || product.hsn_code || product.weight ||
+                    Object.entries(additionalData).some(([k, v]) =>
+                      !['description', 'highlights', 'notes', 'product_name'].includes(k) &&
+                      (typeof v === 'string' || typeof v === 'number' ||
+                       (typeof v === 'object' && !Array.isArray(v) && v !== null))
+                    )
+                  ) && (
                     <div className="overflow-hidden border border-[#F0F0F0] rounded-xl">
                       <table className="w-full text-sm">
                         <tbody>
@@ -472,16 +499,46 @@ export default function ProductDetailPage() {
                               <td className="px-5 py-3.5 text-[#686B78]">{product.weight}</td>
                             </tr>
                           )}
-                          {Object.entries(additionalData).map(([key, val]) => (
-                            <tr key={key} className="border-b border-[#F0F0F0] last:border-0">
-                              <td className="px-5 py-3.5 font-semibold text-[#1C1C1C] bg-[#FAFAFA]">{key}</td>
-                              <td className="px-5 py-3.5 text-[#686B78]">{val as string}</td>
-                            </tr>
-                          ))}
+                          {Object.entries(additionalData)
+                            .filter(([k]) => !['description', 'highlights', 'notes', 'product_name'].includes(k))
+                            .flatMap(([key, val]) => {
+                              const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                              if (typeof val === 'string' || typeof val === 'number') {
+                                return [(
+                                  <tr key={key} className="border-b border-[#F0F0F0] last:border-0">
+                                    <td className="px-5 py-3.5 font-semibold text-[#1C1C1C] bg-[#FAFAFA] w-1/3">{label}</td>
+                                    <td className="px-5 py-3.5 text-[#686B78]">{String(val)}</td>
+                                  </tr>
+                                )];
+                              }
+                              if (typeof val === 'object' && !Array.isArray(val) && val !== null) {
+                                return Object.entries(val as Record<string, unknown>).map(([subKey, subVal]) => (
+                                  <tr key={`${key}-${subKey}`} className="border-b border-[#F0F0F0] last:border-0">
+                                    <td className="px-5 py-3.5 font-semibold text-[#1C1C1C] bg-[#FAFAFA] w-1/3">
+                                      {subKey.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+                                    </td>
+                                    <td className="px-5 py-3.5 text-[#686B78]">{String(subVal)}</td>
+                                  </tr>
+                                ));
+                              }
+                              return [];
+                            })}
                         </tbody>
                       </table>
                     </div>
-                  ) : (
+                  )}
+
+                  {/* Notes footnotes */}
+                  {Array.isArray(additionalData.notes) && additionalData.notes.length > 0 && (
+                    <ul className="space-y-0.5">
+                      {(additionalData.notes as string[]).map((note: string, i: number) => (
+                        <li key={i} className="text-xs text-[#93959F]">* {note}</li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {/* Fallback empty state */}
+                  {!product.sku && !product.hsn_code && !product.weight && Object.keys(additionalData).length === 0 && (
                     <p className="text-[#686B78] text-sm">No additional details available for this product.</p>
                   )}
                 </div>
