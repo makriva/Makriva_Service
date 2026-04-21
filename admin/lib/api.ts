@@ -38,6 +38,10 @@ export const uploadProductImage = (productId: string, file: File, isPrimary = fa
 };
 export const deleteProductImage = (imageId: string) =>
   api.delete(`/api/upload/product-image/${imageId}`).then(r => r.data);
+export const setProductImagePrimary = (imageId: string) =>
+  api.put(`/api/upload/product-image/${imageId}/set-primary`).then(r => r.data);
+export const reorderProductImage = (imageId: string, sortOrder: number) =>
+  api.put(`/api/upload/product-image/${imageId}/reorder?sort_order=${sortOrder}`).then(r => r.data);
 
 // Upload helpers
 export const uploadCategoryImage = (categoryId: string, file: File) => {

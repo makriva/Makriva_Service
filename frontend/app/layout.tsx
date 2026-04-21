@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   title: 'MakRiva — Premium Makhana',
   description: 'India\'s finest premium fox nuts (makhana). Roasted, flavoured, and naturally healthy.',
   keywords: 'makhana, foxnuts, lotus seeds, premium snacks, healthy snacks, makriva',
+  icons: {
+    icon: 'https://res.cloudinary.com/dsqzdclae/image/upload/f_auto,q_auto/v1776442607/makriva-v2/makriva-logo.png',
+    shortcut: 'https://res.cloudinary.com/dsqzdclae/image/upload/f_auto,q_auto/v1776442607/makriva-v2/makriva-logo.png',
+    apple: 'https://res.cloudinary.com/dsqzdclae/image/upload/f_auto,q_auto/v1776442607/makriva-v2/makriva-logo.png',
+  },
   openGraph: {
     title: 'MakRiva — Premium Makhana',
     description: 'India\'s finest premium fox nuts.',

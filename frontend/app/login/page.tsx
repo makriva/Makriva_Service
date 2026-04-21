@@ -11,7 +11,6 @@ import { useAuth } from '@/context/AuthContext';
 import { login as apiLogin, getMe } from '@/lib/api';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
-import { BsFacebook } from 'react-icons/bs';
 import toast from 'react-hot-toast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -74,9 +73,6 @@ function LoginForm() {
       <div className="space-y-3 mb-6">
         <a href={`${API_URL}/api/auth/google`} className="flex items-center justify-center gap-3 w-full py-3 border border-gray-200 bg-white hover:border-brand hover:shadow-sm transition-all text-sm font-medium text-[#1C1C1C] rounded-xl">
           <FcGoogle size={20} /> Continue with Google
-        </a>
-        <a href={`${API_URL}/api/auth/facebook`} className="flex items-center justify-center gap-3 w-full py-3 border border-gray-200 bg-white hover:border-blue-400 hover:shadow-sm transition-all text-sm font-medium text-[#1C1C1C] rounded-xl">
-          <BsFacebook size={18} className="text-blue-500" /> Continue with Facebook
         </a>
       </div>
 

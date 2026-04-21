@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { getProducts, createProduct, updateProduct, deleteProduct, uploadProductImage, deleteProductImage, getCategories } from '@/lib/api';
-import { FiPlus, FiEdit2, FiTrash2, FiUpload, FiX, FiSearch, FiImage, FiStar } from 'react-icons/fi';
+import { getProducts, createProduct, updateProduct, deleteProduct, uploadProductImage, deleteProductImage, setProductImagePrimary, reorderProductImage, getCategories } from '@/lib/api';
+import { FiPlus, FiEdit2, FiTrash2, FiUpload, FiX, FiSearch, FiImage, FiStar, FiChevronUp, FiChevronDown } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
-const EMPTY_FORM = { name: '', slug: '', description: '', short_description: '', price: '', original_price: '', weight: '', stock: '', category_id: '', is_active: true, is_featured: false, is_bestseller: false };
+const EMPTY_FORM = { name: '', slug: '', description: '', short_description: '', price: '', original_price: '', weight: '', stock: '', sku: '', hsn_code: '', nutrition_info: '', additional_details: '', category_id: '', is_active: true, is_featured: false, is_bestseller: false };
 
 // Each pending image: { file, preview, isPrimary }
 type PendingImage = { file: File; preview: string; isPrimary: boolean };
@@ -45,7 +45,7 @@ export default function ProductsPage() {
   };
 
   const openEdit = (p: any) => {
-    setForm({ ...p, price: String(p.price), original_price: String(p.original_price || ''), stock: String(p.stock), category_id: p.category_id || '' });
+    setForm({ ...p, price: String(p.price), original_price: String(p.original_price || ''), stock: String(p.stock), category_id: p.category_id || '', sku: p.sku || '', hsn_code: p.hsn_code || '', nutrition_info: p.nutrition_info || '', additional_details: p.additional_details || '' });
     setEditing(p);
     setExistingImages(p.images || []);
     setPendingImages([]);
@@ -82,10 +82,34 @@ export default function ProductsPage() {
     setExistingImages(prev => prev.map(img => ({ ...img, is_primary: false })));
   };
 
-  const setExistingPrimary = (imgId: string) => {
-    setExistingImages(prev => prev.map(img => ({ ...img, is_primary: img.id === imgId })));
-    // Clear primary from pending
-    setPendingImages(prev => prev.map(p => ({ ...p, isPrimary: false })));
+  const setExistingPrimary = async (imgId: string) => {
+    try {
+      await setProductImagePrimary(imgId);
+      setExistingImages(prev => prev.map(img => ({ ...img, is_primary: img.id === imgId, sort_order: img.id === imgId ? 0 : img.sort_order })));
+      setPendingImages(prev => prev.map(p => ({ ...p, isPrimary: false })));
+      toast.success('Primary image updated');
+    } catch {
+      // Fallback to local state update
+      setExistingImages(prev => prev.map(img => ({ ...img, is_primary: img.id === imgId })));
+      setPendingImages(prev => prev.map(p => ({ ...p, isPrimary: false })));
+    }
+  };
+
+  const handleMoveImage = async (imgId: string, direction: 'up' | 'down') => {
+    const idx = existingImages.findIndex(img => img.id === imgId);
+    if (idx === -1) return;
+    const newIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (newIdx < 0 || newIdx >= existingImages.length) return;
+    const reordered = [...existingImages];
+    [reordered[idx], reordered[newIdx]] = [reordered[newIdx], reordered[idx]];
+    // Assign new sort_orders
+    const updated = reordered.map((img, i) => ({ ...img, sort_order: i }));
+    setExistingImages(updated);
+    try {
+      await Promise.all(updated.map(img => reorderProductImage(img.id, img.sort_order)));
+    } catch {
+      toast.error('Failed to reorder images');
+    }
   };
 
   const handleDeleteExisting = async (imgId: string) => {
@@ -260,7 +284,7 @@ export default function ProductsPage() {
                 ) : (
                   <div className="grid grid-cols-4 gap-2">
                     {/* Existing images */}
-                    {existingImages.map(img => (
+                    {existingImages.map((img, imgIdx) => (
                       <div key={img.id} className="relative group aspect-square bg-[#0A0A0A] border border-[#1E1E1E] overflow-hidden">
                         <Image src={img.url} alt="" fill className="object-cover" />
                         {img.is_primary && (
@@ -268,6 +292,21 @@ export default function ProductsPage() {
                             <FiStar size={8} /> Primary
                           </div>
                         )}
+                        {/* Reorder arrows */}
+                        <div className="absolute top-1 right-1 flex flex-col gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                          {imgIdx > 0 && (
+                            <button type="button" onClick={() => handleMoveImage(img.id, 'up')}
+                              className="bg-black/70 text-white p-0.5 hover:bg-black">
+                              <FiChevronUp size={10} />
+                            </button>
+                          )}
+                          {imgIdx < existingImages.length - 1 && (
+                            <button type="button" onClick={() => handleMoveImage(img.id, 'down')}
+                              className="bg-black/70 text-white p-0.5 hover:bg-black">
+                              <FiChevronDown size={10} />
+                            </button>
+                          )}
+                        </div>
                         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5">
                           {!img.is_primary && (
                             <button
@@ -341,6 +380,8 @@ export default function ProductsPage() {
                 { key: 'original_price', label: 'Original Price (₹)' },
                 { key: 'weight', label: 'Weight (e.g. 150g)' },
                 { key: 'stock', label: 'Stock Qty' },
+                { key: 'sku', label: 'SKU' },
+                { key: 'hsn_code', label: 'HSN Code' },
               ].map(f => (
                 <div key={f.key} className={(f as any).span ? 'sm:col-span-2' : ''}>
                   <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">{f.label}</label>
@@ -355,6 +396,18 @@ export default function ProductsPage() {
               <div className="sm:col-span-2">
                 <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Description</label>
                 <textarea rows={3} value={form.description} onChange={e => setForm((ff: any) => ({ ...ff, description: e.target.value }))} className="input-admin resize-none" />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">
+                  Nutrition Info <span className="text-gray-600 normal-case">( JSON — e.g. {`{"Calories":"99 kcal","Protein":"4g"}`} )</span>
+                </label>
+                <textarea rows={3} value={form.nutrition_info} onChange={e => setForm((ff: any) => ({ ...ff, nutrition_info: e.target.value }))} placeholder={'{"Serving Size":"30g","Calories":"99 kcal","Protein":"4g","Carbohydrates":"19g","Fat":"0.5g"}'} className="input-admin resize-none font-mono text-xs" />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">
+                  Additional Details <span className="text-gray-600 normal-case">( JSON — e.g. {`{"Brand":"MakRiva","Shelf Life":"6 months"}`} )</span>
+                </label>
+                <textarea rows={3} value={form.additional_details} onChange={e => setForm((ff: any) => ({ ...ff, additional_details: e.target.value }))} placeholder={'{"Brand":"MakRiva","Country of Origin":"India","Shelf Life":"6 months","Storage":"Cool, dry place"}'} className="input-admin resize-none font-mono text-xs" />
               </div>
               <div>
                 <label className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Category</label>

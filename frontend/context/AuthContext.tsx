@@ -10,6 +10,10 @@ interface User {
   full_name: string | null;
   is_admin: boolean;
   avatar_url: string | null;
+  address_line1?: string | null;
+  city?: string | null;
+  state?: string | null;
+  pincode?: string | null;
 }
 
 interface AuthContextType {

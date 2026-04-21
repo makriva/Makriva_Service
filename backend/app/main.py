@@ -13,6 +13,11 @@ Base.metadata.create_all(bind=engine)
 with engine.connect() as _conn:
     _conn.execute(text("ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking_url VARCHAR"))
     _conn.execute(text("ALTER TABLE instagram_reels ADD COLUMN IF NOT EXISTS video_url VARCHAR"))
+    _conn.execute(text("ALTER TABLE products ADD COLUMN IF NOT EXISTS sku VARCHAR"))
+    _conn.execute(text("ALTER TABLE products ADD COLUMN IF NOT EXISTS hsn_code VARCHAR"))
+    _conn.execute(text("ALTER TABLE products ADD COLUMN IF NOT EXISTS nutrition_info TEXT"))
+    _conn.execute(text("ALTER TABLE products ADD COLUMN IF NOT EXISTS additional_details TEXT"))
+    _conn.execute(text("ALTER TABLE product_images ADD COLUMN IF NOT EXISTS sort_order INTEGER DEFAULT 0"))
     _conn.commit()
 
 app = FastAPI(

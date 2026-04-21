@@ -30,8 +30,8 @@ export default function WhyMakriva() {
 
           {/* Content */}
           <div>
-            <p className="section-subtitle">Why Choose Us</p>
-            <h2 className="section-title text-left mb-4">The MakRiva Difference</h2>
+            <p className="text-[#FF5200] text-xs font-bold tracking-[0.2em] uppercase mb-3">Why Choose Us</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-white text-left mb-4">The MakRiva Difference</h2>
             <div className="gold-line mx-0 mb-8" />
             <p className="text-gray-400 mb-10 leading-relaxed">
               At MakRiva, we believe healthy snacking should never compromise on taste. Every batch of our makhana goes through rigorous quality checks before reaching you.

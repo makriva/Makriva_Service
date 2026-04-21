@@ -8,6 +8,7 @@ class ProductImageOut(BaseModel):
     id: uuid.UUID
     url: str
     is_primary: bool
+    sort_order: int = 0
 
     class Config:
         from_attributes = True
@@ -22,6 +23,10 @@ class ProductBase(BaseModel):
     original_price: Optional[float] = None
     weight: Optional[str] = None
     stock: int = 0
+    sku: Optional[str] = None
+    hsn_code: Optional[str] = None
+    nutrition_info: Optional[str] = None
+    additional_details: Optional[str] = None
     category_id: Optional[uuid.UUID] = None
     thumbnail_url: Optional[str] = None
     is_active: bool = True
@@ -41,6 +46,10 @@ class ProductUpdate(BaseModel):
     original_price: Optional[float] = None
     weight: Optional[str] = None
     stock: Optional[int] = None
+    sku: Optional[str] = None
+    hsn_code: Optional[str] = None
+    nutrition_info: Optional[str] = None
+    additional_details: Optional[str] = None
     category_id: Optional[uuid.UUID] = None
     thumbnail_url: Optional[str] = None
     is_active: Optional[bool] = None

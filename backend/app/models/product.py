@@ -20,6 +20,11 @@ class Product(Base):
     weight = Column(String, nullable=True)  # e.g. "150g", "250g"
     stock = Column(Integer, default=0)
 
+    sku = Column(String, nullable=True)
+    hsn_code = Column(String, nullable=True)
+    nutrition_info = Column(Text, nullable=True)      # JSON string
+    additional_details = Column(Text, nullable=True)  # JSON string
+
     category_id = Column(UUID(as_uuid=True), ForeignKey("categories.id"), nullable=True)
     category = relationship("Category", back_populates="products")
 
@@ -43,6 +48,7 @@ class ProductImage(Base):
     url = Column(String, nullable=False)
     public_id = Column(String, nullable=True)  # Cloudinary public_id
     is_primary = Column(Boolean, default=False)
+    sort_order = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     product = relationship("Product", back_populates="images")

@@ -1,31 +1,83 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { IMG } from '@/lib/staticImages';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
+import { updateProfile } from '@/lib/api';
 import {
   FiShoppingCart, FiUser, FiMenu, FiX,
-  FiSearch, FiMapPin, FiChevronDown, FiPackage, FiLogOut,
+  FiSearch, FiMapPin, FiChevronDown, FiPackage, FiLogOut, FiCheck,
 } from 'react-icons/fi';
 import CartDrawer from './CartDrawer';
+import toast from 'react-hot-toast';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { itemCount } = useCart();
-  const [scrolled, setScrolled]   = useState(false);
-  const [menuOpen, setMenuOpen]   = useState(false);
-  const [cartOpen, setCartOpen]   = useState(false);
-  const [userMenu, setUserMenu]   = useState(false);
-  const [cartPulse, setCartPulse] = useState(false);
+  const [scrolled, setScrolled]         = useState(false);
+  const [menuOpen, setMenuOpen]         = useState(false);
+  const [cartOpen, setCartOpen]         = useState(false);
+  const [userMenu, setUserMenu]         = useState(false);
+  const [cartPulse, setCartPulse]       = useState(false);
+  const [deliveryOpen, setDeliveryOpen] = useState(false);
+  const [deliverySaving, setDeliverySaving] = useState(false);
+  const [deliveryForm, setDeliveryForm] = useState({ line1: '', city: '', state: '', pincode: '' });
+  const deliveryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Pre-fill delivery form from user profile or localStorage
+  useEffect(() => {
+    if (user?.city) {
+      setDeliveryForm({
+        line1:   (user as any).address_line1 || '',
+        city:    (user as any).city || '',
+        state:   (user as any).state || '',
+        pincode: (user as any).pincode || '',
+      });
+    } else if (typeof window !== 'undefined') {
+      try {
+        const saved = JSON.parse(localStorage.getItem('deliveryAddress') || '{}');
+        if (saved.city) setDeliveryForm(saved);
+      } catch {}
+    }
+  }, [user]);
+
+  // Close delivery dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (deliveryRef.current && !deliveryRef.current.contains(e.target as Node)) {
+        setDeliveryOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  const handleSaveDelivery = async () => {
+    if (!deliveryForm.city) { toast.error('Please enter a city'); return; }
+    setDeliverySaving(true);
+    try {
+      if (user) {
+        await updateProfile({ address_line1: deliveryForm.line1, city: deliveryForm.city, state: deliveryForm.state, pincode: deliveryForm.pincode });
+      } else {
+        localStorage.setItem('deliveryAddress', JSON.stringify(deliveryForm));
+      }
+      toast.success('Delivery address saved!');
+      setDeliveryOpen(false);
+    } catch {
+      toast.error('Failed to save address');
+    } finally {
+      setDeliverySaving(false);
+    }
+  };
 
   // Pulse the cart badge whenever itemCount changes
   useEffect(() => {
@@ -74,11 +126,71 @@ export default function Navbar() {
             </Link>
 
             {/* ── Delivery location (desktop) ────────── */}
-            <button className="hidden md:flex items-center gap-1.5 text-sm font-medium text-[#686B78] hover:text-brand transition-colors shrink-0 max-w-[180px]">
-              <FiMapPin size={15} className="text-brand shrink-0" />
-              <span className="truncate">Deliver to my location</span>
-              <FiChevronDown size={13} className="shrink-0" />
-            </button>
+            <div className="hidden md:block relative shrink-0" ref={deliveryRef}>
+              <button
+                onClick={() => setDeliveryOpen(!deliveryOpen)}
+                className="flex items-center gap-1.5 text-sm font-medium text-[#686B78] hover:text-brand transition-colors max-w-[200px]"
+              >
+                <FiMapPin size={15} className="text-brand shrink-0" />
+                <span className="truncate">
+                  {deliveryForm.city ? `Deliver to ${deliveryForm.city}` : 'Deliver to my location'}
+                </span>
+                <FiChevronDown size={13} className={`shrink-0 transition-transform ${deliveryOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {deliveryOpen && (
+                <div className="absolute top-[calc(100%+12px)] left-0 w-80 bg-white border border-[#E9E9EB] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-5 z-50 animate-fade-in">
+                  <h3 className="font-extrabold text-sm text-[#1C1C1C] mb-4 flex items-center gap-2">
+                    <FiMapPin size={15} className="text-brand" /> Set Delivery Address
+                  </h3>
+                  <div className="space-y-3">
+                    <input
+                      type="text"
+                      placeholder="House/Flat no., Street name"
+                      value={deliveryForm.line1}
+                      onChange={e => setDeliveryForm(f => ({ ...f, line1: e.target.value }))}
+                      className="input-food text-sm py-2.5"
+                    />
+                    <div className="grid grid-cols-2 gap-2">
+                      <input
+                        type="text"
+                        placeholder="City *"
+                        value={deliveryForm.city}
+                        onChange={e => setDeliveryForm(f => ({ ...f, city: e.target.value }))}
+                        className="input-food text-sm py-2.5"
+                      />
+                      <input
+                        type="text"
+                        placeholder="State"
+                        value={deliveryForm.state}
+                        onChange={e => setDeliveryForm(f => ({ ...f, state: e.target.value }))}
+                        className="input-food text-sm py-2.5"
+                      />
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="PIN Code"
+                      value={deliveryForm.pincode}
+                      onChange={e => setDeliveryForm(f => ({ ...f, pincode: e.target.value }))}
+                      className="input-food text-sm py-2.5"
+                    />
+                  </div>
+                  {!user && (
+                    <p className="text-xs text-[#93959F] mt-2 flex items-center gap-1">
+                      <FiUser size={11} />
+                      <Link href="/login" className="text-brand hover:underline">Login</Link> to permanently save your address
+                    </p>
+                  )}
+                  <button
+                    onClick={handleSaveDelivery}
+                    disabled={deliverySaving}
+                    className="btn-gold w-full mt-3 py-2.5 text-sm gap-2"
+                  >
+                    {deliverySaving ? 'Saving…' : <><FiCheck size={14} /> Save Address</>}
+                  </button>
+                </div>
+              )}
+            </div>
 
             {/* ── Search bar (desktop) ───────────────── */}
             <div className="hidden md:flex flex-1 max-w-md relative">
@@ -226,8 +338,12 @@ export default function Navbar() {
             </div>
 
             {/* Mobile location */}
-            <button className="flex items-center gap-2 text-sm text-[#686B78] mb-4">
-              <FiMapPin size={14} className="text-brand" /> Deliver to my location
+            <button
+              onClick={() => { setMenuOpen(false); setDeliveryOpen(true); }}
+              className="flex items-center gap-2 text-sm text-[#686B78] mb-4 hover:text-brand transition-colors"
+            >
+              <FiMapPin size={14} className="text-brand" />
+              {deliveryForm.city ? `Deliver to ${deliveryForm.city}` : 'Set delivery location'}
             </button>
 
             {navLinks.map(link => (

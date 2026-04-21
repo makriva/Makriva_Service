@@ -77,6 +77,40 @@ def delete_product_image(
     return {"message": "Image deleted"}
 
 
+@router.put("/product-image/{image_id}/set-primary")
+def set_primary_image(
+    image_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    _=Depends(require_admin),
+):
+    image = db.query(ProductImage).filter(ProductImage.id == image_id).first()
+    if not image:
+        raise HTTPException(status_code=404, detail="Image not found")
+    db.query(ProductImage).filter(ProductImage.product_id == image.product_id).update({"is_primary": False})
+    image.is_primary = True
+    image.sort_order = 0
+    product = db.query(Product).filter(Product.id == image.product_id).first()
+    if product:
+        product.thumbnail_url = image.url
+    db.commit()
+    return {"message": "Primary image updated"}
+
+
+@router.put("/product-image/{image_id}/reorder")
+def reorder_product_image(
+    image_id: uuid.UUID,
+    sort_order: int,
+    db: Session = Depends(get_db),
+    _=Depends(require_admin),
+):
+    image = db.query(ProductImage).filter(ProductImage.id == image_id).first()
+    if not image:
+        raise HTTPException(status_code=404, detail="Image not found")
+    image.sort_order = sort_order
+    db.commit()
+    return {"message": "Sort order updated"}
+
+
 # ─── Category images ──────────────────────────────────────────────────────────
 
 @router.post("/category/{category_id}")
