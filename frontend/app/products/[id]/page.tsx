@@ -137,8 +137,12 @@ export default function ProductDetailPage() {
     ? Math.round((1 - product.price / product.original_price) * 100)
     : null;
 
-  let nutritionData: Record<string, string> = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let nutritionData: any = {};
   try { if (product.nutrition_info) nutritionData = JSON.parse(product.nutrition_info); } catch {}
+
+  // Detect format: nested = has a "nutrition" key with nested objects
+  const isNestedNutrition = nutritionData && typeof nutritionData.nutrition === 'object' && !Array.isArray(nutritionData.nutrition);
 
   let additionalData: Record<string, string> = {};
   try { if (product.additional_details) additionalData = JSON.parse(product.additional_details); } catch {}
@@ -369,33 +373,72 @@ export default function ProductDetailPage() {
               {activeTab === 1 && (
                 <div>
                   {Object.keys(nutritionData).length > 0 ? (
-                    <div className="max-w-md">
+                    <div className="max-w-lg">
                       <div className="border-4 border-[#1C1C1C] p-4 rounded-lg">
                         <h3 className="text-2xl font-black text-[#1C1C1C] border-b-8 border-[#1C1C1C] pb-1 mb-2">Nutrition Facts</h3>
-                        {nutritionData['Serving Size'] && (
+
+                        {/* Serving size row */}
+                        {(isNestedNutrition ? nutritionData.serve_size : nutritionData['Serving Size']) && (
                           <p className="text-sm font-semibold text-[#1C1C1C] mb-2 border-b border-[#1C1C1C] pb-1">
-                            Serving Size: {nutritionData['Serving Size']}
+                            Serving Size: {isNestedNutrition ? nutritionData.serve_size : nutritionData['Serving Size']}
                           </p>
                         )}
-                        {nutritionData['Calories'] && (
-                          <div className="flex items-end justify-between border-b-4 border-[#1C1C1C] pb-1 mb-2">
-                            <span className="font-black text-[#1C1C1C]">Calories</span>
-                            <span className="text-3xl font-black text-[#1C1C1C]">{nutritionData['Calories']}</span>
-                          </div>
-                        )}
-                        <table className="w-full text-sm">
-                          <tbody>
-                            {Object.entries(nutritionData)
-                              .filter(([k]) => k !== 'Serving Size' && k !== 'Calories')
-                              .map(([key, val]) => (
-                                <tr key={key} className="border-b border-[#E0E0E0]">
-                                  <td className="py-1.5 font-semibold text-[#1C1C1C]">{key}</td>
-                                  <td className="py-1.5 text-right text-[#686B78]">{val}</td>
+
+                        {/* Nested format: two-column table (per 100g / per serve) */}
+                        {isNestedNutrition ? (
+                          <table className="w-full text-sm">
+                            <thead>
+                              <tr className="border-b-2 border-[#1C1C1C]">
+                                <th className="py-1.5 text-left font-black text-[#1C1C1C]">Nutrient</th>
+                                <th className="py-1.5 text-right font-black text-[#1C1C1C]">Per 100g</th>
+                                <th className="py-1.5 text-right font-black text-[#1C1C1C] pl-4">Per Serve</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {Object.entries(nutritionData.nutrition as Record<string, Record<string, string>>).map(([nutrient, vals]) => (
+                                <tr key={nutrient} className="border-b border-[#E0E0E0]">
+                                  <td className="py-1.5 font-semibold text-[#1C1C1C] capitalize">{nutrient.replace(/_/g, ' ')}</td>
+                                  <td className="py-1.5 text-right text-[#686B78]">{vals.per_100g ?? '—'}</td>
+                                  <td className="py-1.5 text-right text-[#686B78] pl-4">{vals.per_serve ?? '—'}</td>
                                 </tr>
                               ))}
-                          </tbody>
-                        </table>
-                        <p className="text-xs text-[#93959F] mt-3">* Approximate values. Actual values may vary slightly by batch.</p>
+                            </tbody>
+                          </table>
+                        ) : (
+                          /* Flat format: original single-column layout */
+                          <>
+                            {nutritionData['Calories'] && (
+                              <div className="flex items-end justify-between border-b-4 border-[#1C1C1C] pb-1 mb-2">
+                                <span className="font-black text-[#1C1C1C]">Calories</span>
+                                <span className="text-3xl font-black text-[#1C1C1C]">{nutritionData['Calories']}</span>
+                              </div>
+                            )}
+                            <table className="w-full text-sm">
+                              <tbody>
+                                {Object.entries(nutritionData as Record<string, string>)
+                                  .filter(([k]) => k !== 'Serving Size' && k !== 'Calories')
+                                  .map(([key, val]) => (
+                                    <tr key={key} className="border-b border-[#E0E0E0]">
+                                      <td className="py-1.5 font-semibold text-[#1C1C1C]">{key}</td>
+                                      <td className="py-1.5 text-right text-[#686B78]">{val}</td>
+                                    </tr>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </>
+                        )}
+
+                        {/* Notes */}
+                        {isNestedNutrition && Array.isArray(nutritionData.notes) && nutritionData.notes.length > 0 && (
+                          <ul className="mt-3 space-y-0.5">
+                            {(nutritionData.notes as string[]).map((note: string, i: number) => (
+                              <li key={i} className="text-xs text-[#93959F]">* {note}</li>
+                            ))}
+                          </ul>
+                        )}
+                        {!isNestedNutrition && (
+                          <p className="text-xs text-[#93959F] mt-3">* Approximate values. Actual values may vary slightly by batch.</p>
+                        )}
                       </div>
                     </div>
                   ) : (
