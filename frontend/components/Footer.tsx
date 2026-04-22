@@ -44,7 +44,7 @@ export default function Footer() {
               {[
                 { href: 'https://www.instagram.com/makrivamakhana/', icon: <FiInstagram size={17} />, label: 'Instagram' },
                 { href: 'https://www.facebook.com/profile.php?id=61583943211780', icon: <FiFacebook size={17} />, label: 'Facebook' },
-                { href: 'https://youtube.com', icon: <FiYoutube size={17} />, label: 'YouTube' },
+                { href: 'https://youtube.com/@makrivatraders?si=YDyygzrpElqkPgh_', icon: <FiYoutube size={17} />, label: 'YouTube' },
               ].map(({ href, icon, label }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
                   className="w-9 h-9 rounded-xl flex items-center justify-center text-[#686B78] hover:text-brand hover:bg-brand-50 border border-[#E9E9EB] transition-all duration-200">
