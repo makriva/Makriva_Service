@@ -154,8 +154,52 @@ export default function ProductDetailPage() {
     { q: 'How long does an opened pack stay fresh?', a: 'Once opened, store in an airtight container. The product stays fresh for up to 2 weeks after opening.' },
   ];
 
+  const productUrl = `https://makriva.in/products/${product.slug || id}`;
+  const productImages = images.filter((img: string) => img && !img.startsWith('/'));
+
+  const productSchema = {
+    '@context': 'https://schema.org/',
+    '@graph': [
+      {
+        '@type': 'Product',
+        name: product.name,
+        ...(productImages.length > 0 && { image: productImages }),
+        description: product.short_description || product.description || `Premium makhana by MakRiva — ${product.name}`,
+        ...(product.sku && { sku: product.sku }),
+        brand: { '@type': 'Brand', name: 'MakRiva' },
+        offers: {
+          '@type': 'Offer',
+          priceCurrency: 'INR',
+          price: String(product.price),
+          priceValidUntil: '2026-12-31',
+          availability: 'https://schema.org/InStock',
+          url: productUrl,
+          seller: { '@type': 'Organization', name: 'MakRiva' },
+        },
+        ...(product.original_price && {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: '4.8',
+            reviewCount: '2000',
+            bestRating: '5',
+            worstRating: '1',
+          },
+        }),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://makriva.in' },
+          { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://makriva.in/products' },
+          { '@type': 'ListItem', position: 3, name: product.name, item: productUrl },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
       <Navbar />
       <main className="bg-[#FAFAFA] min-h-screen pt-[68px] pb-20">
 
