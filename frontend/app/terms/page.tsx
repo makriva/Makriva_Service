@@ -11,8 +11,8 @@ export default function TermsPage() {
     <PolicyLayout
       title="Terms & Conditions"
       subtitle="Please read these terms carefully before using our website or placing an order."
-      effectiveDate="1 January 2025"
-      lastUpdated="29 April 2026"
+      effectiveDate="1 April 2025"
+      lastUpdated="15 March 2026"
       sections={[
         {
           title: 'Acceptance of Terms',

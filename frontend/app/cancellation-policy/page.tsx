@@ -11,8 +11,8 @@ export default function CancellationPolicyPage() {
     <PolicyLayout
       title="Cancellation Policy"
       subtitle="Understand when and how you can cancel an order, and what happens next."
-      effectiveDate="1 January 2025"
-      lastUpdated="29 April 2026"
+      effectiveDate="1 April 2025"
+      lastUpdated="15 March 2026"
       sections={[
         {
           title: 'Cancellation Window',

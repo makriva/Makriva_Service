@@ -11,8 +11,8 @@ export default function PrivacyPage() {
     <PolicyLayout
       title="Privacy Policy"
       subtitle="How we collect, use, and protect your personal information."
-      effectiveDate="1 January 2025"
-      lastUpdated="29 April 2026"
+      effectiveDate="1 April 2025"
+      lastUpdated="15 March 2026"
       sections={[
         {
           title: 'Information We Collect',

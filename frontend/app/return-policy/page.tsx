@@ -11,8 +11,8 @@ export default function ReturnPolicyPage() {
     <PolicyLayout
       title="Return & Refund Policy"
       subtitle="We stand behind every pack we ship. Here is how we make it right if something goes wrong."
-      effectiveDate="1 January 2025"
-      lastUpdated="29 April 2026"
+      effectiveDate="1 April 2025"
+      lastUpdated="15 March 2026"
       sections={[
         {
           title: 'Return Eligibility',
