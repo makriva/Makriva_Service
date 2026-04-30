@@ -99,8 +99,8 @@ function ProductsContent() {
         <div className="bg-white border-b border-[#F0F0F0] py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-xs font-bold tracking-widest uppercase text-brand mb-1">Browse</p>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-[#1C1C1C]">Our Products</h1>
-            <p className="text-[#686B78] text-sm mt-1">Premium makhana — naturally healthy, outrageously delicious.</p>
+            <h1 className="text-2xl md:text-3xl font-extrabold text-[#1C1C1C]">Buy Premium Makhana Online</h1>
+            <p className="text-[#686B78] text-sm mt-1">Healthy phool makhana (fox nuts) — dry roasted, flavoured & raw. Natural, high protein, zero preservatives.</p>
           </div>
         </div>
 

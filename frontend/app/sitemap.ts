@@ -17,6 +17,9 @@ const productSlugs = [
   'dry-roasted-makhana',
   'large-grade',
   'medium-grade',
+  'rock-salt-pepper',
+  'pudina-fresh',
+  'chilli-cheese',
 ];
 
 const productRoutes: MetadataRoute.Sitemap = productSlugs.map(slug => ({
