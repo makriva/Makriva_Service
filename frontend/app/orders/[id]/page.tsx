@@ -9,6 +9,7 @@ import Footer from '@/components/Footer';
 import { useAuth } from '@/context/AuthContext';
 import { getOrder } from '@/lib/api';
 import { FiArrowLeft, FiPackage, FiExternalLink, FiTruck } from 'react-icons/fi';
+import InvoiceDownloadButton from '@/components/InvoiceDownloadButton';
 
 const STATUS_COLORS: Record<string, string> = {
   pending:    'text-amber-700 bg-amber-50 border-amber-200',
@@ -85,9 +86,12 @@ export default function OrderDetailPage() {
                 Placed on {new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
               </p>
             </div>
-            <span className={`text-xs font-bold px-3 py-1.5 border rounded-full uppercase tracking-wider ${STATUS_COLORS[order.status] || 'text-gray-600 bg-gray-100 border-gray-200'}`}>
-              {order.status}
-            </span>
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className={`text-xs font-bold px-3 py-1.5 border rounded-full uppercase tracking-wider ${STATUS_COLORS[order.status] || 'text-gray-600 bg-gray-100 border-gray-200'}`}>
+                {order.status}
+              </span>
+              <InvoiceDownloadButton order={order} />
+            </div>
           </div>
 
           {/* Progress tracker */}
