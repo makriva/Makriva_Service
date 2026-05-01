@@ -31,7 +31,7 @@ class Settings(BaseSettings):
 
     # Zoho Mail SMTP
     ZOHO_SMTP_HOST: str = "smtp.zoho.in"
-    ZOHO_SMTP_PORT: int = 587
+    ZOHO_SMTP_PORT: int = 465
     ZOHO_SENDER_EMAIL: str = "team@makriva.in"
     ZOHO_SMTP_PASSWORD: Optional[str] = None
 

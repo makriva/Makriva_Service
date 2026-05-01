@@ -20,9 +20,9 @@ STATUS_LABELS = {
 
 
 def _smtp():
-    server = smtplib.SMTP(settings.ZOHO_SMTP_HOST, settings.ZOHO_SMTP_PORT, timeout=15)
+    # Port 465 uses SMTP_SSL (direct TLS), unlike port 587 which uses STARTTLS
+    server = smtplib.SMTP_SSL(settings.ZOHO_SMTP_HOST, settings.ZOHO_SMTP_PORT, timeout=20)
     server.ehlo()
-    server.starttls()
     server.login(settings.ZOHO_SENDER_EMAIL, settings.ZOHO_SMTP_PASSWORD)
     return server
 
@@ -78,7 +78,7 @@ def send_order_status_email(order) -> bool:
     <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)">
       <tr>
         <td style="background:#1a1a2e;padding:24px 32px;text-align:center">
-          <img src="{settings.FRONTEND_URL}/images/makriva-logo.png" alt="Makriva" height="44" style="height:44px;width:auto"/>
+          <p style="margin:0;color:#D4AF37;font-size:22px;font-weight:800;letter-spacing:1px">MAKRIVA</p>
         </td>
       </tr>
       <tr>
@@ -144,7 +144,7 @@ def send_contact_reply_email(to_email: str, to_name: str, original_subject: str,
     <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)">
       <tr>
         <td style="background:#1a1a2e;padding:24px 32px;text-align:center">
-          <img src="{settings.FRONTEND_URL}/images/makriva-logo.png" alt="Makriva" height="44" style="height:44px;width:auto"/>
+          <p style="margin:0;color:#D4AF37;font-size:22px;font-weight:800;letter-spacing:1px">MAKRIVA</p>
         </td>
       </tr>
       <tr>
@@ -170,7 +170,6 @@ def send_contact_reply_email(to_email: str, to_name: str, original_subject: str,
 
 
 def send_bulk_email(to_emails: List[str], subject: str, body: str) -> dict:
-    """Send to multiple recipients. Returns counts."""
     if not settings.ZOHO_SMTP_PASSWORD:
         return {"sent": 0, "failed": len(to_emails)}
     sent, failed = 0, 0
@@ -189,7 +188,7 @@ def send_bulk_email(to_emails: List[str], subject: str, body: str) -> dict:
   <tr><td align="center">
     <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)">
       <tr><td style="background:#1a1a2e;padding:24px 32px;text-align:center">
-        <img src="{settings.FRONTEND_URL}/images/makriva-logo.png" alt="Makriva" height="44" style="height:44px;width:auto"/>
+        <p style="margin:0;color:#D4AF37;font-size:22px;font-weight:800;letter-spacing:1px">MAKRIVA</p>
       </td></tr>
       <tr><td style="padding:28px 32px;color:#1a1a2e;font-size:15px;line-height:1.7;white-space:pre-wrap">{body}</td></tr>
       <tr><td style="background:#f8fafc;padding:16px 32px;text-align:center;border-top:1px solid #e5e7eb">
