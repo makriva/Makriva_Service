@@ -74,7 +74,9 @@ def build_invoice_html(order, items: list) -> str:
             <tr>
               <td>
                 <img src="{logo_url}" alt="Makriva" height="48"
-                     style="display:block;height:48px;width:auto"/>
+                     style="display:block;height:48px;width:auto"
+                     onerror="this.style.display='none';this.nextSibling.style.display='block'"/>
+                <p style="display:none;margin:0;color:#D4AF37;font-size:22px;font-weight:800;letter-spacing:1px">MAKRIVA</p>
               </td>
               <td style="text-align:right">
                 <p style="margin:0;color:#a0aec0;font-size:12px">Order Invoice</p>
