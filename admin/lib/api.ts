@@ -79,10 +79,21 @@ export const toggleUserActive = (id: string) => api.put(`/api/users/${id}/toggle
 // Contact Queries
 export const getContactQueries = () => api.get('/api/contact/queries').then(r => r.data);
 export const markQueryViewed = (id: string) => api.put(`/api/contact/queries/${id}/viewed`).then(r => r.data);
+export const replyToQuery = (id: string, reply: string) => api.post(`/api/contact/queries/${id}/reply`, { reply }).then(r => r.data);
 
 // Newsletter
 export const getNewsletterSignups = () => api.get('/api/contact/newsletter/list').then(r => r.data);
 export const markNewsletterViewed = (id: string) => api.put(`/api/contact/newsletter/${id}/viewed`).then(r => r.data);
+export const sendBulkNewsletterEmail = (email_ids: string[], subject: string, body: string) =>
+  api.post('/api/contact/newsletter/bulk-email', { email_ids, subject, body }).then(r => r.data);
+
+// General email
+export const sendGeneralEmail = (to_email: string, subject: string, body: string) =>
+  api.post('/api/contact/send-email', { to_email, subject, body }).then(r => r.data);
+
+// Settings
+export const getSettings = () => api.get('/api/settings/').then(r => r.data);
+export const updateSettings = (data: object) => api.put('/api/settings/', data).then(r => r.data);
 
 // Instagram Reels
 export const getAdminReels = () => api.get('/api/reels/all').then(r => r.data);
