@@ -1,7 +1,8 @@
+import json
 import logging
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import urllib.parse
+import urllib.request
+import urllib.error
 from typing import List
 
 from app.config import settings
@@ -19,29 +20,67 @@ STATUS_LABELS = {
 }
 
 
-def _smtp():
-    # Port 465 uses SMTP_SSL (direct TLS), unlike port 587 which uses STARTTLS
-    server = smtplib.SMTP_SSL(settings.ZOHO_SMTP_HOST, settings.ZOHO_SMTP_PORT, timeout=20)
-    server.ehlo()
-    server.login(settings.ZOHO_SENDER_EMAIL, settings.ZOHO_SMTP_PASSWORD)
-    return server
+def _get_access_token() -> str | None:
+    """Exchange refresh token for a fresh access token."""
+    if not all([settings.ZOHO_CLIENT_ID, settings.ZOHO_CLIENT_SECRET, settings.ZOHO_REFRESH_TOKEN]):
+        return None
+    data = urllib.parse.urlencode({
+        "grant_type": "refresh_token",
+        "client_id": settings.ZOHO_CLIENT_ID,
+        "client_secret": settings.ZOHO_CLIENT_SECRET,
+        "refresh_token": settings.ZOHO_REFRESH_TOKEN,
+    }).encode()
+    req = urllib.request.Request(
+        "https://accounts.zoho.in/oauth/v2/token",
+        data=data,
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            result = json.loads(resp.read())
+            return result.get("access_token")
+    except Exception as exc:
+        logger.error("Failed to get Zoho access token: %s", exc)
+        return None
 
 
 def _send(to: str, subject: str, html: str) -> bool:
-    if not settings.ZOHO_SMTP_PASSWORD:
-        logger.warning("ZOHO_SMTP_PASSWORD not set — skipping email")
+    if not settings.ZOHO_REFRESH_TOKEN:
+        logger.warning("Zoho credentials not configured — skipping email to %s", to)
         return False
+
+    access_token = _get_access_token()
+    if not access_token:
+        logger.error("Could not obtain Zoho access token")
+        return False
+
+    payload = json.dumps({
+        "fromAddress": settings.ZOHO_SENDER_EMAIL,
+        "toAddress": to,
+        "subject": subject,
+        "content": html,
+        "mailFormat": "html",
+    }).encode()
+
+    req = urllib.request.Request(
+        f"https://mail.zoho.in/api/accounts/{settings.ZOHO_ACCOUNT_ID}/messages",
+        data=payload,
+        headers={
+            "Authorization": f"Zoho-oauthtoken {access_token}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
     try:
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = subject
-        msg["From"] = f"Makriva <{settings.ZOHO_SENDER_EMAIL}>"
-        msg["To"] = to
-        msg.attach(MIMEText(html, "html"))
-        with _smtp() as server:
-            server.sendmail(settings.ZOHO_SENDER_EMAIL, to, msg.as_string())
-        return True
-    except smtplib.SMTPException as exc:
-        logger.error("SMTP error to %s: %s", to, exc)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            result = json.loads(resp.read())
+            if result.get("status", {}).get("code") == 200:
+                return True
+            logger.error("Zoho API error for %s: %s", to, result)
+            return False
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode(errors="replace")
+        logger.error("Zoho HTTP error %s for %s: %s", exc.code, to, body)
         return False
     except Exception as exc:
         logger.error("Email error to %s: %s", to, exc)
@@ -62,7 +101,10 @@ def send_order_status_email(order) -> bool:
     label, color = STATUS_LABELS.get(status_val, (status_val.title(), "#1a1a2e"))
     tracking_row = ""
     if order.tracking_number:
-        track_link = f'<a href="{order.tracking_url}" style="color:#1a1a2e">{order.tracking_number}</a>' if order.tracking_url else order.tracking_number
+        track_link = (
+            f'<a href="{order.tracking_url}" style="color:#1a1a2e">{order.tracking_number}</a>'
+            if order.tracking_url else order.tracking_number
+        )
         tracking_row = f"""
         <tr>
           <td style="padding:6px 0;color:#6b7280;font-size:13px">Tracking</td>
@@ -170,18 +212,11 @@ def send_contact_reply_email(to_email: str, to_name: str, original_subject: str,
 
 
 def send_bulk_email(to_emails: List[str], subject: str, body: str) -> dict:
-    if not settings.ZOHO_SMTP_PASSWORD:
+    if not settings.ZOHO_REFRESH_TOKEN:
         return {"sent": 0, "failed": len(to_emails)}
     sent, failed = 0, 0
-    try:
-        with _smtp() as server:
-            for email in to_emails:
-                try:
-                    msg = MIMEMultipart("alternative")
-                    msg["Subject"] = subject
-                    msg["From"] = f"Makriva <{settings.ZOHO_SENDER_EMAIL}>"
-                    msg["To"] = email
-                    html = f"""<!DOCTYPE html>
+    for email in to_emails:
+        html = f"""<!DOCTYPE html>
 <html><head><meta charset="UTF-8"/></head>
 <body style="margin:0;padding:0;background:#f4f4f5;font-family:'Segoe UI',Arial,sans-serif">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 0">
@@ -198,13 +233,8 @@ def send_bulk_email(to_emails: List[str], subject: str, body: str) -> dict:
   </td></tr>
 </table>
 </body></html>"""
-                    msg.attach(MIMEText(html, "html"))
-                    server.sendmail(settings.ZOHO_SENDER_EMAIL, email, msg.as_string())
-                    sent += 1
-                except Exception as exc:
-                    logger.error("Failed sending to %s: %s", email, exc)
-                    failed += 1
-    except Exception as exc:
-        logger.error("SMTP session error: %s", exc)
-        failed += len(to_emails) - sent
+        if _send(email, subject, html):
+            sent += 1
+        else:
+            failed += 1
     return {"sent": sent, "failed": failed}
