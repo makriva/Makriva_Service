@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
@@ -11,12 +11,23 @@ import { applyDiscount } from '@/lib/api';
 import { FiMinus, FiPlus, FiTrash2, FiTag, FiArrowRight, FiArrowLeft, FiShoppingBag } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export default function CartPage() {
   const { user } = useAuth();
   const { items, total, updateItem, removeItem, localItems, updateLocal, removeLocal } = useCart();
   const [discountCode, setDiscountCode]     = useState('');
   const [discountResult, setDiscountResult] = useState<any>(null);
   const [applying, setApplying]             = useState(false);
+  const [freeAbove, setFreeAbove]           = useState(499);
+  const [shipCharge, setShipCharge]         = useState(50);
+
+  useEffect(() => {
+    fetch(`${API}/api/settings/public`)
+      .then(r => r.json())
+      .then(d => { setFreeAbove(d.free_shipping_above ?? 499); setShipCharge(d.shipping_charge ?? 50); })
+      .catch(() => {});
+  }, []);
 
   const displayItems = user
     ? items.map(i => ({
@@ -51,7 +62,7 @@ export default function CartPage() {
     }
   };
 
-  const shipping   = total >= 499 ? 0 : 50;
+  const shipping   = total >= freeAbove ? 0 : shipCharge;
   const finalTotal = (discountResult ? discountResult.final_amount : total) + shipping;
 
   // ── Empty state ──────────────────────────────────────────────
@@ -189,7 +200,7 @@ export default function CartPage() {
                   </div>
                   {shipping > 0 && (
                     <p className="text-xs text-[#93959F] bg-brand-50 rounded-lg px-3 py-2">
-                      Add ₹{(499 - total).toFixed(0)} more to unlock free delivery
+                      Add ₹{(freeAbove - total).toFixed(0)} more to unlock free delivery
                     </p>
                   )}
                 </div>

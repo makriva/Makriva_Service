@@ -11,6 +11,7 @@ import ComingSoon from '@/components/ComingSoon';
 import InstagramReels from '@/components/InstagramReels';
 import Testimonials from '@/components/Testimonials';
 import CTABanner from '@/components/CTABanner';
+import HealthBanner from '@/components/HealthBanner';
 
 export const metadata: Metadata = {
   title: 'Buy Makhana Online | Premium Phool Makhana & Healthy Fox Nuts Snacks — MakRiva',
@@ -50,6 +51,7 @@ export default function HomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageSchema) }} />
       <Navbar />
+      <HealthBanner />
       <main>
         <HeroSection />
         <StatsSection />

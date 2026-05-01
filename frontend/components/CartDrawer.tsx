@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FiX, FiTrash2, FiMinus, FiPlus, FiShoppingBag, FiArrowRight } from 'react-icons/fi';
@@ -9,9 +9,20 @@ import { useAuth } from '@/context/AuthContext';
 
 interface Props { open: boolean; onClose: () => void; }
 
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export default function CartDrawer({ open, onClose }: Props) {
   const { user } = useAuth();
   const { items, itemCount, total, updateItem, removeItem, localItems, updateLocal, removeLocal } = useCart();
+  const [freeAbove, setFreeAbove] = useState(499);
+  const [shipCharge, setShipCharge] = useState(50);
+
+  useEffect(() => {
+    fetch(`${API}/api/settings/public`)
+      .then(r => r.json())
+      .then(d => { setFreeAbove(d.free_shipping_above ?? 499); setShipCharge(d.shipping_charge ?? 50); })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -36,7 +47,7 @@ export default function CartDrawer({ open, onClose }: Props) {
         weight:   i.weight,
       }));
 
-  const shipping   = total >= 499 ? 0 : 50;
+  const shipping   = total >= freeAbove ? 0 : shipCharge;
   const finalTotal = total + shipping;
 
   return (
@@ -77,21 +88,21 @@ export default function CartDrawer({ open, onClose }: Props) {
         </div>
 
         {/* Free shipping progress bar */}
-        {total < 499 && displayItems.length > 0 && (
+        {total < freeAbove && displayItems.length > 0 && (
           <div className="px-6 pt-4 pb-3 bg-brand-50 border-b border-[#FFE4D6]">
             <div className="flex justify-between text-xs font-semibold text-[#686B78] mb-1.5">
-              <span>Add ₹{(499 - total).toFixed(0)} more for</span>
+              <span>Add ₹{(freeAbove - total).toFixed(0)} more for</span>
               <span className="text-brand font-bold">Free Delivery</span>
             </div>
             <div className="h-1.5 bg-[#FFE4D6] rounded-full overflow-hidden">
               <div
                 className="h-full bg-brand rounded-full transition-all duration-500"
-                style={{ width: `${Math.min((total / 499) * 100, 100)}%` }}
+                style={{ width: `${Math.min((total / freeAbove) * 100, 100)}%` }}
               />
             </div>
           </div>
         )}
-        {total >= 499 && displayItems.length > 0 && (
+        {total >= freeAbove && displayItems.length > 0 && (
           <div className="px-6 py-2.5 bg-green-50 border-b border-green-100">
             <p className="text-xs font-bold text-green-600">🎉 You unlocked free delivery!</p>
           </div>

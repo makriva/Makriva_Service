@@ -8,6 +8,7 @@ from app.models.discount import Discount
 from app.models.settings import Settings
 from app.schemas.order import OrderCreate, OrderOut, OrderStatusUpdate
 from app.utils.auth import require_user, require_admin, get_current_user
+from app.utils.email_service import send_order_invoice_email, send_order_status_email
 from app.models.user import User
 import uuid
 import random
@@ -101,6 +102,9 @@ def create_order(data: OrderCreate, db: Session = Depends(get_db), current_user:
 
     db.commit()
     db.refresh(order)
+
+    send_order_invoice_email(order, order.items)
+
     return order
 
 
@@ -188,4 +192,6 @@ def update_order_status(order_id: uuid.UUID, data: OrderStatusUpdate, db: Sessio
         order.notes = data.notes
     db.commit()
     db.refresh(order)
+    if data.status:
+        send_order_status_email(order)
     return order

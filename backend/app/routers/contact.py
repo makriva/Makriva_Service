@@ -5,6 +5,7 @@ from pydantic import BaseModel, EmailStr
 from app.database import get_db
 from app.models.contact import ContactQuery, NewsletterSignup
 from app.utils.auth import require_admin
+from app.utils.email_service import send_contact_reply_email, send_bulk_email
 
 router = APIRouter(prefix="/api/contact", tags=["contact"])
 
@@ -120,3 +121,50 @@ def mark_newsletter_viewed(signup_id: str, db: Session = Depends(get_db)):
     s.is_viewed = True
     db.commit()
     return {"message": "Marked as viewed"}
+
+
+class ReplyIn(BaseModel):
+    reply: str
+
+
+class BulkEmailIn(BaseModel):
+    email_ids: List[str]
+    subject: str
+    body: str
+
+
+class GeneralEmailIn(BaseModel):
+    to_email: str
+    subject: str
+    body: str
+
+
+@router.post("/queries/{query_id}/reply", dependencies=[Depends(require_admin)])
+def reply_to_query(query_id: str, data: ReplyIn, db: Session = Depends(get_db)):
+    q = db.query(ContactQuery).filter(ContactQuery.id == query_id).first()
+    if not q:
+        raise HTTPException(status_code=404, detail="Not found")
+    ok = send_contact_reply_email(q.email, q.name, q.subject or "Your Query", data.reply)
+    if not ok:
+        raise HTTPException(status_code=500, detail="Failed to send email")
+    q.is_viewed = True
+    db.commit()
+    return {"message": "Reply sent"}
+
+
+@router.post("/newsletter/bulk-email", dependencies=[Depends(require_admin)])
+def bulk_newsletter_email(data: BulkEmailIn, db: Session = Depends(get_db)):
+    signups = db.query(NewsletterSignup).filter(NewsletterSignup.id.in_(data.email_ids)).all()
+    emails = [s.email for s in signups]
+    if not emails:
+        raise HTTPException(status_code=400, detail="No valid recipients")
+    result = send_bulk_email(emails, data.subject, data.body)
+    return result
+
+
+@router.post("/send-email", dependencies=[Depends(require_admin)])
+def send_general_email(data: GeneralEmailIn):
+    ok = send_bulk_email([data.to_email], data.subject, data.body)
+    if ok["sent"] == 0:
+        raise HTTPException(status_code=500, detail="Failed to send email")
+    return {"message": "Email sent"}

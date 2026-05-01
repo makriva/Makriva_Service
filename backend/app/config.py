@@ -29,6 +29,12 @@ class Settings(BaseSettings):
     ADMIN_URL: str = "http://localhost:3001"
     BACKEND_URL: str = "http://localhost:8000"
 
+    # Zoho Mail SMTP
+    ZOHO_SMTP_HOST: str = "smtp.zoho.in"
+    ZOHO_SMTP_PORT: int = 587
+    ZOHO_SENDER_EMAIL: str = "team@makriva.in"
+    ZOHO_SMTP_PASSWORD: Optional[str] = None
+
     class Config:
         env_file = ".env"
 
