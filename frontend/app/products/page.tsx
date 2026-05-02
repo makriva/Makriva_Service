@@ -13,8 +13,6 @@ const CATEGORIES = [
   { id: 'bestseller', label: '🏆 Bestsellers',   filter: (p: any) => p.is_bestseller },
   { id: 'featured',   label: '⭐ Featured',      filter: (p: any) => p.is_featured },
   { id: 'flavored',   label: '🌶 Flavoured',     filter: (p: any) => /chilli|masala|pudina|pepper|cheese|spic/i.test(p.name) },
-  { id: 'plain',      label: '🧂 Plain & Natural', filter: (p: any) => /plain|natural|dry|roasted|rock salt/i.test(p.name) },
-  { id: 'premium',    label: '✨ Premium',        filter: (p: any) => /premium|large|grade a/i.test(p.name) },
 ];
 
 const SORTS = [
@@ -171,41 +169,82 @@ function ProductsContent() {
             ))}
           </div>
 
-          {/* ── Results count ────────────────────────────────── */}
-          {!loading && (
-            <p className="text-[#686B78] text-sm mb-5 font-medium">
-              {filtered.length === 0
-                ? 'No products found'
-                : `${filtered.length} product${filtered.length !== 1 ? 's' : ''} found`}
-              {activeSearch && <span> for <span className="font-bold text-[#1C1C1C]">&ldquo;{activeSearch}&rdquo;</span></span>}
-            </p>
-          )}
+          {/* ── Flavoured Coming Soon ────────────────────────── */}
+          {activeCategory === 'flavored' ? (
+            <div className="flex flex-col items-center justify-center py-20">
+              <div className="relative w-full max-w-lg mx-auto rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#FF6B35] via-[#FF4500] to-[#C0392B] p-1">
+                <div className="rounded-[22px] bg-white/10 backdrop-blur-sm px-8 py-14 flex flex-col items-center text-center">
+                  {/* Animated fire icon */}
+                  <div className="text-7xl mb-5 animate-bounce select-none">🌶️</div>
 
-          {/* ── Grid ─────────────────────────────────────────── */}
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}
-            </div>
-          ) : filtered.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-24 text-center">
-              <span className="text-6xl mb-5">🔍</span>
-              <h3 className="text-lg font-bold text-[#1C1C1C] mb-2">Nothing found</h3>
-              <p className="text-[#686B78] text-sm mb-6">
-                {activeSearch
-                  ? `No products match "${activeSearch}". Try a different search.`
-                  : 'No products in this category yet.'}
-              </p>
-              <button
-                onClick={() => { clearSearch(); setActiveCategory('all'); }}
-                className="btn-gold px-8"
-              >
-                Clear Filters
-              </button>
+                  {/* Badge */}
+                  <span className="inline-block bg-white/20 text-white text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-4 border border-white/30">
+                    Coming Soon
+                  </span>
+
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-3 leading-tight">
+                    Flavoured Makhana<br />
+                    <span className="text-yellow-300">in the making!</span>
+                  </h2>
+
+                  <p className="text-white/80 text-sm md:text-base max-w-sm mb-8 leading-relaxed">
+                    We&apos;re crafting bold, fiery, and delicious flavoured makhana — from Chilli Cheese to Pudina Fresh. Get ready to snack differently.
+                  </p>
+
+                  {/* CTA */}
+                  <button
+                    onClick={() => setActiveCategory('all')}
+                    className="inline-flex items-center gap-2 bg-white text-[#C0392B] font-bold text-sm px-7 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200"
+                  >
+                    <span>Explore Available Products</span>
+                    <span className="text-base">→</span>
+                  </button>
+                </div>
+
+                {/* Decorative blobs */}
+                <div className="absolute -top-8 -right-8 w-36 h-36 rounded-full bg-yellow-400/20 blur-2xl pointer-events-none" />
+                <div className="absolute -bottom-8 -left-8 w-36 h-36 rounded-full bg-white/10 blur-2xl pointer-events-none" />
+              </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {filtered.map(p => <ProductCard key={p.id} product={p} />)}
-            </div>
+            <>
+              {/* ── Results count ──────────────────────────────── */}
+              {!loading && (
+                <p className="text-[#686B78] text-sm mb-5 font-medium">
+                  {filtered.length === 0
+                    ? 'No products found'
+                    : `${filtered.length} product${filtered.length !== 1 ? 's' : ''} found`}
+                  {activeSearch && <span> for <span className="font-bold text-[#1C1C1C]">&ldquo;{activeSearch}&rdquo;</span></span>}
+                </p>
+              )}
+
+              {/* ── Grid ───────────────────────────────────────── */}
+              {loading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                  {Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}
+                </div>
+              ) : filtered.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-24 text-center">
+                  <span className="text-6xl mb-5">🔍</span>
+                  <h3 className="text-lg font-bold text-[#1C1C1C] mb-2">Nothing found</h3>
+                  <p className="text-[#686B78] text-sm mb-6">
+                    {activeSearch
+                      ? `No products match "${activeSearch}". Try a different search.`
+                      : 'No products in this category yet.'}
+                  </p>
+                  <button
+                    onClick={() => { clearSearch(); setActiveCategory('all'); }}
+                    className="btn-gold px-8"
+                  >
+                    Clear Filters
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                  {filtered.map(p => <ProductCard key={p.id} product={p} />)}
+                </div>
+              )}
+            </>
           )}
         </div>
       </main>
