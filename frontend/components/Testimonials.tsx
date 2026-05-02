@@ -7,7 +7,7 @@ const testimonials = [
   { name: 'Rahul K.',   city: 'Delhi',     text: 'Been ordering Makriva for 3 months now. The quality is incredibly consistent and the packaging keeps them fresh for weeks. Highly recommend.', rating: 5, initial: 'R' },
   { name: 'Anita M.',   city: 'Bangalore', text: 'The dry roasted variant is perfect for my fitness goals. High protein, low carb, and actually delicious. Love that there are no artificial additives!', rating: 5, initial: 'A' },
   { name: 'Vikram T.',  city: 'Hyderabad', text: 'Gifted a combo pack to my parents and they absolutely love it. The presentation is premium and the quality speaks for itself.', rating: 5, initial: 'V' },
-  { name: 'Kavya R.',   city: 'Pune',      text: 'Rock salt & pepper flavour is my new addiction! The packaging is very premium, makes it a great gift. Fast delivery too!', rating: 5, initial: 'K' },
+  { name: 'Puja A.',   city: 'Pune',      text: 'Rock salt & pepper flavour is my new addiction! The packaging is very premium, makes it a great gift. Fast delivery too!', rating: 5, initial: 'K' },
   { name: 'Deepak N.',  city: 'Chennai',   text: 'Switched from regular chips to Makriva and never looked back. My whole family loves it — kids, parents, everyone!', rating: 5, initial: 'D' },
 ];
 
