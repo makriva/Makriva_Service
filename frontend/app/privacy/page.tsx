@@ -80,7 +80,7 @@ export default function PrivacyPage() {
         },
         {
           title: 'Contact',
-          body: 'For privacy-related queries or to exercise your data rights, contact us at makrivatraders@gmail.com or +91 83980 30577.',
+          body: 'For privacy-related queries or to exercise your data rights, contact us at team@makriva.in or +91 83980 30577.',
         },
       ]}
     />

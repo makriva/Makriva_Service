@@ -47,7 +47,7 @@ export default function ContactPage() {
               <p className="text-[#686B78] leading-relaxed mb-8">Have a question about our products or your order? We'd love to hear from you.</p>
               <div className="space-y-5">
                 {[
-                  { icon: FiMail, label: 'Email', value: 'makrivatraders@gmail.com', href: 'mailto:makrivatraders@gmail.com' },
+                  { icon: FiMail, label: 'Email', value: 'team@makriva.in', href: 'mailto:team@makriva.in' },
                   { icon: FiPhone, label: 'Phone', value: '+91 83980 30577', href: 'tel:+918398030577' },
                   { icon: FiMapPin, label: 'Location', value: 'Jawahar Nagar, Safidon Road, Near Deep Palace Hotel, Jind, Haryana, 126102', href: 'https://www.google.com/maps/place/MakRiva+Traders/@29.3245682,76.3501392,860m/data=!3m2!1e3!4b1!4m6!3m5!1s0x391205608b63d11b:0xdd30b1c691b84a7a!8m2!3d29.3245635!4d76.3527141!16s%2Fg%2F11mlyj2py2?entry=ttu&g_ep=EgoyMDI2MDQxMi4wIKXMDSoASAFQAw%3D%3D' },
                 ].map(item => (

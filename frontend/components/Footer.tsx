@@ -132,8 +132,8 @@ export default function Footer() {
                 <div className="w-8 h-8 rounded-xl bg-brand-50 flex items-center justify-center shrink-0">
                   <FiMail size={14} className="text-brand" />
                 </div>
-                <a href="mailto:makrivatraders@gmail.com" className="hover:text-brand transition-colors text-xs">
-                  makrivatraders@gmail.com
+                <a href="mailto:team@makriva.in" className="hover:text-brand transition-colors text-xs">
+                  team@makriva.in
                 </a>
               </li>
               <li className="flex items-center gap-3 text-sm text-[#686B78]">

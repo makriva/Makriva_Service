@@ -42,7 +42,7 @@ export default function TermsPage() {
           body: [
             'Creating an account is optional but recommended for order tracking and a faster checkout experience.',
             'You are responsible for maintaining the confidentiality of your account credentials.',
-            'You must notify us immediately at makrivatraders@gmail.com if you suspect any unauthorised use of your account.',
+            'You must notify us immediately at team@makriva.in if you suspect any unauthorised use of your account.',
             'MakRiva is not liable for losses arising from unauthorised account access due to your failure to keep credentials secure.',
           ],
         },
@@ -73,7 +73,7 @@ export default function TermsPage() {
         },
         {
           title: 'Contact',
-          body: 'For questions or concerns regarding these Terms and Conditions, contact us at makrivatraders@gmail.com or +91 83980 30577.',
+          body: 'For questions or concerns regarding these Terms and Conditions, contact us at team@makriva.in or +91 83980 30577.',
         },
       ]}
     />

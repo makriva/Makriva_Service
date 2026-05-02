@@ -35,7 +35,7 @@ export default function ReturnPolicyPage() {
         {
           title: 'How to Initiate a Return',
           body: [
-            'Email us at makrivatraders@gmail.com with subject line: "Return Request — [Your Order Number]".',
+            'Email us at team@makriva.in with subject line: "Return Request — [Your Order Number]".',
             'Include: your order number, description of the issue, and clear photographs of the product and packaging.',
             'Our customer care team will review your request and respond within 48 business hours.',
             'Once approved, you will receive pickup instructions or a prepaid return label (where applicable).',
@@ -69,7 +69,7 @@ export default function ReturnPolicyPage() {
         },
         {
           title: 'Contact for Return Queries',
-          body: 'Reach our team at makrivatraders@gmail.com or +91 83980 30577 (Mon–Sat, 10am–6pm). We aim to resolve all return queries within 2 business days.',
+          body: 'Reach our team at team@makriva.in or +91 83980 30577 (Mon–Sat, 10am–6pm). We aim to resolve all return queries within 2 business days.',
         },
       ]}
     />

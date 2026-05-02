@@ -25,7 +25,7 @@ export default function CancellationPolicyPage() {
         {
           title: 'How to Cancel an Order',
           body: [
-            'Email us at makrivatraders@gmail.com with the subject line: "Order Cancellation — [Your Order Number]".',
+            'Email us at team@makriva.in with the subject line: "Order Cancellation — [Your Order Number]".',
             'Alternatively, call us at +91 83980 30577 (Mon–Sat, 10am–6pm).',
             'Please have your order number and registered email/phone ready when contacting us.',
             'We will confirm the cancellation within 2 business hours if the order is still eligible.',

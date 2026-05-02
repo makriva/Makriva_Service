@@ -46,7 +46,7 @@ export default function ShippingPolicyPage() {
             'FREE shipping on all orders above ₹499.',
             'A flat shipping fee of ₹50 applies to orders below ₹499.',
             'No additional handling charges.',
-            'For bulk or wholesale orders, shipping terms are agreed separately — contact us at makrivatraders@gmail.com.',
+            'For bulk or wholesale orders, shipping terms are agreed separately — contact us at team@makriva.in.',
           ],
         },
         {
@@ -61,7 +61,7 @@ export default function ShippingPolicyPage() {
           title: 'Delayed Deliveries',
           body: [
             'While we strive for on-time delivery, delays may occur due to weather conditions, local strikes, public holidays, or courier network congestion.',
-            'In case of significant delays beyond the estimated window, please contact us at makrivatraders@gmail.com.',
+            'In case of significant delays beyond the estimated window, please contact us at team@makriva.in.',
             'MakRiva is not liable for delays caused by courier partners, once the shipment has been handed over.',
           ],
         },
@@ -75,7 +75,7 @@ export default function ShippingPolicyPage() {
         },
         {
           title: 'Damaged in Transit',
-          body: 'If your package arrives visibly damaged, please photograph it before opening and contact us within 48 hours of delivery at makrivatraders@gmail.com. We will arrange a replacement or refund as applicable.',
+          body: 'If your package arrives visibly damaged, please photograph it before opening and contact us within 48 hours of delivery at team@makriva.in. We will arrange a replacement or refund as applicable.',
         },
       ]}
     />

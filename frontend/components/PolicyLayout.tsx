@@ -109,7 +109,7 @@ export default function PolicyLayout({
                 <div>
                   <p className="text-xs font-bold text-[#1C1C1C]">MakRiva Traders</p>
                   <p className="text-[10px] text-[#686B78]">Jind, Haryana · India</p>
-                  <p className="text-[10px] text-[#686B78]">makrivatraders@gmail.com</p>
+                  <p className="text-[10px] text-[#686B78]">team@makriva.in</p>
                 </div>
               </div>
               <p className="text-[10px] text-[#93959F] text-center sm:text-right max-w-xs">
@@ -122,8 +122,8 @@ export default function PolicyLayout({
           <div className="mt-6 text-center">
             <p className="text-sm text-[#686B78]">
               Questions about this policy?{' '}
-              <a href="mailto:makrivatraders@gmail.com" className="text-brand font-semibold hover:underline">
-                makrivatraders@gmail.com
+              <a href="mailto:team@makriva.in" className="text-brand font-semibold hover:underline">
+                team@makriva.in
               </a>
               {' '}or call{' '}
               <a href="tel:+918398030577" className="text-brand font-semibold hover:underline">
