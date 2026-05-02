@@ -1,5 +1,3 @@
-import base64
-import os
 from app.config import settings
 
 GSTIN = "06CIGPA3020C1Z8"
@@ -7,16 +5,8 @@ BUSINESS_NAME = "MAKRIVA TRADERS"
 LEGAL_NAME = "AMAN"
 BUSINESS_ADDRESS = "Safidon Road, Jawahar Nagar, Jind, Haryana – 126102"
 
-_LOGO_PATH = os.path.join(os.path.dirname(__file__), "makriva-logo.png")
-try:
-    with open(_LOGO_PATH, "rb") as _f:
-        _LOGO_B64 = "data:image/png;base64," + base64.b64encode(_f.read()).decode()
-except FileNotFoundError:
-    _LOGO_B64 = ""
-
 
 def build_invoice_html(order, items: list) -> str:
-    logo_url = _LOGO_B64 or f"{settings.FRONTEND_URL}/images/makriva-logo.png"
 
     rows = ""
     for item in items:
@@ -73,10 +63,7 @@ def build_invoice_html(order, items: list) -> str:
           <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
               <td>
-                <img src="{logo_url}" alt="Makriva" height="48"
-                     style="display:block;height:48px;width:auto"
-                     onerror="this.style.display='none';this.nextSibling.style.display='block'"/>
-                <p style="display:none;margin:0;color:#D4AF37;font-size:22px;font-weight:800;letter-spacing:1px">MAKRIVA</p>
+                <p style="margin:0;color:#D4AF37;font-size:22px;font-weight:800;letter-spacing:1px">MAKRIVA</p>
               </td>
               <td style="text-align:right">
                 <p style="margin:0;color:#a0aec0;font-size:12px">Order Invoice</p>
