@@ -3,6 +3,8 @@ import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
 import { Toaster } from 'react-hot-toast';
+import FestiveCursor from '@/components/FestiveCursor';
+import OfferBanner from '@/components/OfferBanner';
 
 const LOGO_URL = 'https://res.cloudinary.com/dsqzdclae/image/upload/f_auto,q_auto/v1776442607/makriva-v2/makriva-logo.png';
 const SITE_URL = 'https://makriva.in';
@@ -123,6 +125,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <FestiveCursor />
+        <OfferBanner />
         <AuthProvider>
           <CartProvider>
             {children}

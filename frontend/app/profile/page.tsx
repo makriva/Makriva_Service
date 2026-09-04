@@ -67,7 +67,7 @@ export default function ProfilePage() {
   return (
     <>
       <Navbar />
-      <main className="pt-20 pb-20 bg-[#FAFAFA] min-h-screen">
+      <main className="pt-[120px] pb-20 bg-[#FAFAFA] min-h-screen">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Profile hero card */}

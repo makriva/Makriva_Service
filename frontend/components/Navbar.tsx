@@ -12,6 +12,7 @@ import {
   FiSearch, FiMapPin, FiChevronDown, FiPackage, FiLogOut, FiCheck,
 } from 'react-icons/fi';
 import CartDrawer from './CartDrawer';
+import { ButterDollop } from './JanmashtamiMotifs';
 import toast from 'react-hot-toast';
 
 export default function Navbar() {
@@ -99,7 +100,7 @@ export default function Navbar() {
     <>
       {/* ── Main Navbar ──────────────────────────────────────── */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ${
+        className={`fixed top-10 left-0 right-0 z-50 bg-white transition-all duration-300 ${
           scrolled ? 'shadow-nav' : 'border-b border-[#F0F0F0]'
         }`}
       >
@@ -108,14 +109,15 @@ export default function Navbar() {
 
             {/* ── Logo ──────────────────────────────── */}
             <Link href="/" className="flex items-center gap-2.5 shrink-0">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden bg-brand-50">
+              <div className="relative w-9 h-9 rounded-xl flex items-center justify-center overflow-visible bg-brand-50">
                 <Image
                   src={IMG.makrivaLogo}
                   alt="MakRiva"
                   width={36}
                   height={36}
-                  className="object-contain"
+                  className="object-contain rounded-xl"
                 />
+                <ButterDollop size={16} className="absolute -top-1.5 -right-1.5 festive-glisten drop-shadow" />
               </div>
               <span
                 className="font-extrabold text-lg tracking-tight hidden sm:block text-brand-gradient"

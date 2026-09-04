@@ -49,6 +49,7 @@ export const getOrderByNumber = (orderNumber: string) => api.get(`/api/orders/nu
 // Discounts
 export const applyDiscount = (code: string, order_amount: number) =>
   api.post('/api/discounts/apply', { code, order_amount }).then(r => r.data);
+export const getActiveDiscounts = () => api.get('/api/discounts/active').then(r => r.data);
 
 // Contact & Newsletter
 export const submitContact = (data: { name: string; email: string; subject: string; message: string }) =>

@@ -4,7 +4,7 @@ from typing import List
 from datetime import datetime
 from app.database import get_db
 from app.models.discount import Discount
-from app.schemas.discount import DiscountCreate, DiscountUpdate, DiscountOut, ApplyDiscountRequest
+from app.schemas.discount import DiscountCreate, DiscountUpdate, DiscountOut, ApplyDiscountRequest, DiscountPublic
 from app.utils.auth import require_admin
 import uuid
 
@@ -14,6 +14,19 @@ router = APIRouter(prefix="/api/discounts", tags=["discounts"])
 @router.get("", response_model=List[DiscountOut])
 def list_discounts(db: Session = Depends(get_db), _=Depends(require_admin)):
     return db.query(Discount).all()
+
+
+@router.get("/active", response_model=List[DiscountPublic])
+def list_active_discounts(db: Session = Depends(get_db)):
+    """Public — powers the sitewide offer banner. No auth, no usage counters exposed."""
+    now = datetime.utcnow()
+    discounts = db.query(Discount).filter(Discount.is_active == True).all()
+    return [
+        d for d in discounts
+        if not (d.valid_until and d.valid_until < now)
+        and not (d.valid_from and d.valid_from > now)
+        and not (d.max_uses and d.used_count >= d.max_uses)
+    ]
 
 
 @router.post("", response_model=DiscountOut)

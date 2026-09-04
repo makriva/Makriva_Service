@@ -54,7 +54,7 @@ export default function CartDrawer({ open, onClose }: Props) {
     <>
       {/* ── Backdrop ─────────────────────────────────────── */}
       <div
-        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-[65] transition-opacity duration-300 ${
           open ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
@@ -62,7 +62,7 @@ export default function CartDrawer({ open, onClose }: Props) {
 
       {/* ── Drawer ───────────────────────────────────────── */}
       <aside
-        className={`fixed top-0 right-0 h-full w-full max-w-[400px] bg-white z-50 flex flex-col shadow-2xl transition-transform duration-350 ease-out ${
+        className={`fixed top-0 right-0 h-full w-full max-w-[400px] bg-white z-[70] flex flex-col shadow-2xl transition-transform duration-350 ease-out ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

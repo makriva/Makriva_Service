@@ -110,7 +110,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex pt-10">
       {/* Left panel */}
       <div className="hidden lg:flex lg:w-1/2 relative">
         <Image src={IMG.bannerHealthyLife} alt="" fill sizes="50vw" className="object-cover" />

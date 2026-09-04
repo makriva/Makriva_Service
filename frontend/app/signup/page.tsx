@@ -39,7 +39,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex pt-10">
       <div className="hidden lg:flex lg:w-1/2 relative">
         <Image src={IMG.makrivaHoldingPackets} alt="" fill sizes="50vw" className="object-cover" />
         <div className="absolute inset-0 bg-black/60" />
