@@ -54,7 +54,7 @@ export default function OrderDetailPage() {
     return (
       <>
         <Navbar />
-        <main className="pt-24 pb-20 flex justify-center bg-[#FAFAFA] min-h-screen">
+        <main className="pt-[136px] pb-20 flex justify-center bg-[#FAFAFA] min-h-screen">
           <div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin mt-20" />
         </main>
         <Footer />
@@ -70,7 +70,7 @@ export default function OrderDetailPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-24 pb-20 bg-[#FAFAFA] min-h-screen">
+      <main className="pt-[136px] pb-20 bg-[#FAFAFA] min-h-screen">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Back */}

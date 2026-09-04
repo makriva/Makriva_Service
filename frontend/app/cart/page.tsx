@@ -70,7 +70,7 @@ export default function CartPage() {
     return (
       <>
         <Navbar />
-        <main className="min-h-screen bg-[#FAFAFA] pt-[68px] flex flex-col items-center justify-center gap-6 px-4">
+        <main className="min-h-screen bg-[#FAFAFA] pt-[108px] flex flex-col items-center justify-center gap-6 px-4">
           <div className="w-24 h-24 rounded-3xl bg-brand-50 flex items-center justify-center text-5xl">🛒</div>
           <div className="text-center">
             <h2 className="text-2xl font-extrabold text-[#1C1C1C] mb-2">Your cart is empty</h2>
@@ -88,7 +88,7 @@ export default function CartPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-[#FAFAFA] min-h-screen pt-[68px] pb-20">
+      <main className="bg-[#FAFAFA] min-h-screen pt-[108px] pb-20">
 
         {/* ── Page header ──────────────────────────────────────── */}
         <div className="bg-white border-b border-[#F0F0F0] py-6">

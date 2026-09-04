@@ -42,14 +42,14 @@ function OrdersContent() {
 
   if (loading) {
     return (
-      <main className="pt-24 pb-20 flex justify-center">
+      <main className="pt-[136px] pb-20 flex justify-center">
         <div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin mt-20" />
       </main>
     );
   }
 
   return (
-    <main className="pt-24 pb-20 bg-[#FAFAFA] min-h-screen">
+    <main className="pt-[136px] pb-20 bg-[#FAFAFA] min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {placed && (
           <div className="mb-6 flex items-start gap-3 bg-green-50 border border-green-200 rounded-xl p-4">
@@ -121,7 +121,7 @@ export default function OrdersPage() {
     <>
       <Navbar />
       <Suspense fallback={
-        <main className="pt-24 pb-20 flex justify-center bg-[#FAFAFA] min-h-screen">
+        <main className="pt-[136px] pb-20 flex justify-center bg-[#FAFAFA] min-h-screen">
           <div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin mt-20" />
         </main>
       }>

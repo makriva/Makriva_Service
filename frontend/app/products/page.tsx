@@ -91,7 +91,7 @@ function ProductsContent() {
   return (
     <>
       <Navbar />
-      <main className="bg-[#FAFAFA] min-h-screen pt-[68px]">
+      <main className="bg-[#FAFAFA] min-h-screen pt-[108px]">
 
         {/* ── Page header band ─────────────────────────────── */}
         <div className="bg-white border-b border-[#F0F0F0] py-8">

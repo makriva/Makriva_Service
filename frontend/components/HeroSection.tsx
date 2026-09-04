@@ -6,8 +6,22 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiClock, FiStar, FiShield, FiArrowRight } from 'react-icons/fi';
 import { IMG } from '@/lib/staticImages';
+import { PeacockFeather, Bansuri, Matki } from './JanmashtamiMotifs';
+import FestiveAmbience from './FestiveAmbience';
 
 const slides = [
+  {
+    image: IMG.makhanaOriginsBg,
+    tag: '🦚 Janmashtami Special',
+    title: 'Krishna\'s favourite,\nnow on your plate',
+    subtitle: 'Celebrate Janmashtami with MakRiva\'s premium makhana — the perfect prasad & festive snack, at special festive prices.',
+    cta: 'Shop the Offer',
+    ctaHref: '/products',
+    badgeBg: 'linear-gradient(90deg, rgba(14,169,138,0.9), rgba(122,63,201,0.9))',
+    headingGradient: 'linear-gradient(90deg, #FFC44D, #FFE29A)',
+    overlay: 'from-[#0B2A24]/90 via-[#3B1E63]/70 to-[#0B2A24]/40',
+    festive: true,
+  },
   {
     image: IMG.makrivaGourmetBanner,
     tag: '🌾 100% Natural',
@@ -15,7 +29,10 @@ const slides = [
     subtitle: 'Handpicked premium makhana from the farms of Bihar — crunchy, healthy & guilt-free.',
     cta: 'Order Now',
     ctaHref: '/products',
-    accent: '#FF5200',
+    badgeBg: 'rgba(255,82,0,0.75)',
+    headingGradient: 'linear-gradient(90deg, #FF8C00, #FFD166)',
+    overlay: 'from-black/75 via-black/50 to-black/20',
+    festive: false,
   },
   {
     image: IMG.makrivaKheer,
@@ -24,7 +41,10 @@ const slides = [
     subtitle: 'High protein, low calorie — the perfect anytime snack packed with flavour & nutrients.',
     cta: 'Shop Now',
     ctaHref: '/products',
-    accent: '#FF6B35',
+    badgeBg: 'rgba(255,82,0,0.75)',
+    headingGradient: 'linear-gradient(90deg, #FF8C00, #FFD166)',
+    overlay: 'from-black/75 via-black/50 to-black/20',
+    festive: false,
   },
   {
     image: IMG.makrivaThreeCombo,
@@ -33,7 +53,10 @@ const slides = [
     subtitle: 'Sourced directly from farmers. Zero additives. Maximum nutrition in every bite.',
     cta: 'Our Story',
     ctaHref: '/about',
-    accent: '#FF5200',
+    badgeBg: 'rgba(255,82,0,0.75)',
+    headingGradient: 'linear-gradient(90deg, #FF8C00, #FFD166)',
+    overlay: 'from-black/75 via-black/50 to-black/20',
+    festive: false,
   },
 ];
 
@@ -56,7 +79,7 @@ export default function HeroSection() {
   const slide = slides[current];
 
   return (
-    <section className="relative min-h-[88vh] flex flex-col justify-center overflow-hidden pt-16">
+    <section className="relative min-h-[88vh] flex flex-col justify-center overflow-hidden pt-[104px]">
       {/* ── Background slide ────────────────────────────────── */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -69,9 +92,21 @@ export default function HeroSection() {
         >
           <Image src={slide.image} alt="" fill sizes="100vw" className="object-cover" priority />
           {/* Gradient overlay — left heavy for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/20" />
+          <div className={`absolute inset-0 bg-gradient-to-r ${slide.overlay}`} />
           {/* Bottom gradient so stats row reads cleanly */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+          {/* Festive motifs — Janmashtami slide only */}
+          {slide.festive && (
+            <>
+              <FestiveAmbience />
+              <div className="hidden lg:flex absolute right-10 xl:right-20 bottom-24 items-end gap-4 opacity-90 pointer-events-none">
+                <Bansuri size={90} className="festive-float-slow mb-6 drop-shadow-lg" />
+                <PeacockFeather size={64} className="festive-float drop-shadow-lg" />
+                <Matki size={72} className="festive-float-slow drop-shadow-lg" />
+              </div>
+            </>
+          )}
         </motion.div>
       </AnimatePresence>
 
@@ -92,7 +127,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
               className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-white mb-5 border border-white/30 backdrop-blur-sm"
-              style={{ background: 'rgba(255,82,0,0.75)' }}
+              style={{ background: slide.badgeBg }}
             >
               {slide.tag}
             </motion.span>
@@ -101,7 +136,7 @@ export default function HeroSection() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 leading-tight tracking-tight">
               {slide.title.split('\n').map((line, i) => (
                 <span key={i} className={`block ${i === 1 ? 'text-transparent bg-clip-text' : ''}`}
-                  style={i === 1 ? { backgroundImage: 'linear-gradient(90deg, #FF8C00, #FFD166)' } : {}}>
+                  style={i === 1 ? { backgroundImage: slide.headingGradient } : {}}>
                   {line}
                 </span>
               ))}

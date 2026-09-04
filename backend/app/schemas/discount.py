@@ -42,3 +42,15 @@ class DiscountOut(DiscountBase):
 class ApplyDiscountRequest(BaseModel):
     code: str
     order_amount: float
+
+
+class DiscountPublic(BaseModel):
+    code: str
+    description: Optional[str] = None
+    discount_type: DiscountType
+    value: float
+    min_order_amount: float
+    valid_until: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True

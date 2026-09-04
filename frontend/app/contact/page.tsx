@@ -28,7 +28,7 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-[#FAFAFA] min-h-screen pt-[68px] pb-20">
+      <main className="bg-[#FAFAFA] min-h-screen pt-[108px] pb-20">
 
         {/* Header band */}
         <div className="bg-white border-b border-[#F0F0F0] py-8">

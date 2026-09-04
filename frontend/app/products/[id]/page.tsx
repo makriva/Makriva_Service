@@ -108,14 +108,14 @@ export default function ProductDetailPage() {
 
   if (loading) return (
     <><Navbar />
-    <div className="min-h-screen flex items-center justify-center pt-20">
+    <div className="min-h-screen flex items-center justify-center pt-[120px]">
       <div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin" />
     </div><Footer /></>
   );
 
   if (!product) return (
     <><Navbar />
-    <div className="min-h-screen flex flex-col items-center justify-center pt-20 gap-4">
+    <div className="min-h-screen flex flex-col items-center justify-center pt-[120px] gap-4">
       <h1 className="text-2xl text-[#686B78]">Product not found</h1>
       <Link href="/products" className="btn-gold">Back to Shop</Link>
     </div><Footer /></>
@@ -237,7 +237,7 @@ export default function ProductDetailPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
       <Navbar />
-      <main className="bg-[#FAFAFA] min-h-screen pt-[68px] pb-20">
+      <main className="bg-[#FAFAFA] min-h-screen pt-[108px] pb-20">
 
         {/* Breadcrumb */}
         <div className="bg-white border-b border-[#F0F0F0] py-3">
