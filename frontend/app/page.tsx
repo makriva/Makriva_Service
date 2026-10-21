@@ -12,6 +12,7 @@ import InstagramReels from '@/components/InstagramReels';
 import Testimonials from '@/components/Testimonials';
 import CTABanner from '@/components/CTABanner';
 import HealthBanner from '@/components/HealthBanner';
+import MakhanaJourney from '@/components/MakhanaJourney';
 
 export const metadata: Metadata = {
   title: 'Buy Makhana Online | Premium Phool Makhana & Healthy Fox Nuts Snacks — MakRiva',
@@ -65,6 +66,7 @@ export default function HomePage() {
         <CTABanner />
       </main>
       <Footer />
+      <MakhanaJourney />
     </>
   );
 }
