@@ -8,7 +8,7 @@ export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-[120px]">
+      <main className="pt-20">
         {/* Hero */}
         <div className="relative h-64 md:h-96 overflow-hidden">
           <Image src={IMG.makrivaHoldingPackets} alt="About MakRiva" fill sizes="100vw" className="object-cover" priority />
